@@ -1,17 +1,12 @@
-Erlang Standards
-================
-
-## Rules of the Page
-If you have a thing that you think is good enough to become a convention among all Inaka's erlangers, write it down (with all the details you consider necessary) in the [Suggestions](#suggestions) list. When discussed and approved, it will be moved to either the [Conventions](#conventions) or the [Great Ideas](#great-ideas) list by [@elbrujohalcon](http://github.com/elbrujohalcon). If rejected, it will be moved to the [Rejected](#rejected) list.
+Erlang Coding Standards & Guidelines
+====================================
 
 Suggested reading material: http://www.erlang.se/doc/programming_rules.shtml
 
 Table of Contents:
 * [Conventions](#conventions)
 * [Great Ideas](#great-ideas)
-* [Rejected](#rejected)
 
-***
 ***
 
 ### Conventions
