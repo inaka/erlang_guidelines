@@ -45,6 +45,17 @@ Table of Contents:
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
 * [Suggestions & Great Ideas](#great-ideas)
+  * [CamelCase over Under_Score](#camelcase-over-under-score)
+  * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
+  * [Comment levels](#comment-levels)
+  * [Keep functions small](#keep-functions-small)
+  * [Keep modules small](#keep-modules-small)
+  * [Honor KISS](#honor-kiss)
+  * [Help your tools help you](#help-your-tools-help-you)
+  * [Commits that remove code are beautiful](#commits-that-remove-code-are-beautiful)
+  * [Control header inclusion](#control-header-inclusion)
+  * [Use behaviours.](#use-behaviours)
+  * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
 
 ## Conventions & Rules
 
@@ -636,4 +647,89 @@ function(State) ->
 ## Suggestions & Great Ideas
 
 Things that should be considered when writing code, but do not cause a PR rejection.
+
+***
+##### CamelCase over Under_Score
+> Symbol naming: Use variables in CamelCase and atoms, function and module names with underscores.
+
+```erlang
+% bad
+Variable_Name = functionName(atomName).
+
+% good
+VariableName = function_name(atom_name).
+```
+
+*Reasoning*: It helps a lot with the next issue in this list
+
+***
+##### Prefer shorter (but still meaningful) variable names
+> As long as it's easy to read and understand, keep variable names short
+
+```erlang
+% bad
+OrganizationToken, OID
+
+% good
+OrgID
+```
+
+*Reasoning*: It helps reducing line lengths, which is also described below
+
+***
+##### Comment levels
+> Module comments go with **%%%**, function comments with **%%**, and code comments with **%**.
+
+```erlang
+% bad
+% @doc My module
+-module(my_module).
+
+% @doc My function
+my_function() -> ok. %% yeah! it returns ok
+
+% good
+%%% @doc My module
+-module(my_module).
+
+%% @doc My function
+my_function() -> ok. % yeah! it returns ok
+```
+
+*Reasoning*: It clearly states what the comment is about, also helpful to search for specific comments, like "%% @".
+
+***
+##### Keep functions small
+> Try to write functions with a small number of lines. **12** lines per function except for integration tests is a good measure.
+
+***
+##### Keep modules small
+> If a module is growing too much (because devs keep adding functionality to it), consider splitting it into several smaller modules that handle groups of related functionality
+
+***
+##### Honor KISS
+> And don't over-engineer.
+
+***
+##### Help your tools help you
+> Help ``dialyzer`` and ``xref`` as much as you can, so that they can work for you
+
+***
+##### Commits that remove code are beautiful
+> Less is more. We value negative commits (those with more deletions than additions). Strive to attain the zen of the codeless code.
+
+***
+##### Control header inclusion
+> When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
+
+***
+##### Use behaviours.
+> Encapsulate reusable code in behaviors.
+
+***
+##### When programming defensively, do so on client side
+One aspect of choosing where want you to crash is how you design your API:
+do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
+If you design this way, the caller crashes if the arg is wrong.
+If you don't tighten up the function head, the gen_server will crash.
 
