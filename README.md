@@ -6,7 +6,7 @@ Suggested reading material: http://www.erlang.se/doc/programming_rules.shtml
 ***
 
 Table of Contents:
-* [Rules & Conventions](#rules-conventions)
+* [Conventions & Rules](#conventions--rules)
   * [Source Code Layout](#source-code-layout)
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
@@ -20,13 +20,13 @@ Table of Contents:
     * [Honor DRY](#honor-dry)
     * [Avoid dynamic calls](#avoid-dynamic-calls)
     * [Group modules in subdirectories by functionality](#group-modules-in-subdirectories-by-functionality)
-    * [Don't write spaghetti code](#dnt-write-spaghetti-code)
+    * [Don't write spaghetti code](#dont-write-spaghetti-code)
   * [Syntax](#syntax)
     * [Avoid if expressions](#avoid-if-expressions)
   * [Naming](#naming)
-    * [Be consistent when naming](#be-consistent-when-naming)
+    * [Be consistent when naming](#be-consistent-when-naming-concepts)
     * [Explicit state should be explicitly named](#explicit-state-should-be-explicitly-named)
-    * [Don't use _Ignored variables](#dont-use-ignored-variables)
+    * [Don't use _Ignored variables](#dont-use-_ignored-variables)
     * [Avoid boolean parameters](#avoid-boolean-parameters)
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
   * [Design](#design)
@@ -39,13 +39,13 @@ Table of Contents:
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
     * [Avoid records in specs](#avoid-records-in-specs)
-    * [Use -callback attributes over behaviour_info/1]()
+    * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
     * [Lock your dependencies](#lock-your-dependencies)
   * [Tools](#tools)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
-* [Suggestions & Great Ideas](#great-ideas)
-  * [CamelCase over Under_Score](#camelcase-over-under-score)
+* [Suggestions & Great Ideas](#suggestions--great-ideas)
+  * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
   * [Keep functions small](#keep-functions-small)
@@ -646,7 +646,7 @@ function(State) ->
 
 ## Suggestions & Great Ideas
 
-Things that should be considered when writing code, but do not cause a PR rejection.
+Things that should be considered when writing code, but do not cause a PR rejection, or are too vague to consistently enforce.
 
 ***
 ##### CamelCase over Under_Score
