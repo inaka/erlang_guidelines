@@ -6,41 +6,55 @@ Suggested reading material: http://www.erlang.se/doc/programming_rules.shtml
 ***
 
 Table of Contents:
-* [Rules & Conventions](#conventions)
+* [Rules & Conventions](#rules-conventions)
   * [Source Code Layout](#source-code-layout)
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
     * [80-90 column per line](#80-90-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
+    * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
     * [Group functions logically](#group-functions-logically)
     * [No God modules](#no-god-modules)
     * [Simple unit tests](#simple-unit-tests)
     * [Honor DRY](#honor-dry)
     * [Avoid dynamic calls](#avoid-dynamic-calls)
+    * [Group modules in subdirectories by functionality](#group-modules-in-subdirectories-by-functionality)
+    * [Don't write spaghetti code](#dnt-write-spaghetti-code)
+  * [Syntax](#syntax)
+    * [Avoid if expressions](#avoid-if-expressions)
   * [Naming](#naming)
     * [Be consistent when naming](#be-consistent-when-naming)
+    * [Explicit state should be explicitly named](#explicit-state-should-be-explicitly-named)
+    * [Don't use _Ignored variables](#dont-use-ignored-variables)
+    * [Avoid boolean parameters](#avoid-boolean-parameters)
+  * [Design](#design)
   * [Comments](#comments)
   * [Exceptions](#exceptions)
   * [Strings](#strings)
+    * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
     * [Uppercase Macros](#uppercase-macros)
     * [No module or function name macros](#no-module-or-function-name-macros)
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
+    * [Avoid records in specs](#avoid-records-in-specs)
+    * [Use -callback attributes over behaviour_info/1]()
     * [Lock your dependencies](#lock-your-dependencies)
   * [Tools](#tools)
+    * [Loud errors](#loud-errors)
+    * [Properly use logging levels](#properly-use-logging-levels)
 * [Suggestions & Great Ideas](#great-ideas)
 
 ## Conventions & Rules
 
 "Things that may be used as reason to reject a Pull Request."
 
-### Syntax & Source Code Layout
+### Source Code Layout
 
-Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
+***
 
-##### rule Spaces over tabs
+##### Spaces over tabs
 >  Spaces over tabs, 2 space indentation.
 
 ```erlang
@@ -109,6 +123,8 @@ stop(EpisodeName) ->
 *Reasoning*:
   This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
+***
+
 ##### Use your spacebar
 >  Surround operators and commas with spaces.
 
@@ -122,6 +138,8 @@ my_function(Hey, Now, It) -> ["works" ++ "again" | [hooray]]].
 
 *Reasoning*:
   Again, easier to find / read / etc.
+
+***
 
 ##### 80-90 column per line
 >  Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
@@ -141,6 +159,8 @@ function1([Foo, Bar | Rest], Arg2) ->
   Bar = #rec{field1 = BF1, field2 = BF2, field3 = BF3},
   do_something(FF1, FF2, FF3, BF1, BF2, BF3, function1(Rest, Arg2)).
 ```
+
+***
 
 ##### Maintain existing style
 >  When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
@@ -164,6 +184,8 @@ function1([Foo, Bar | Rest], Arg2) ->
 
 *Reasoning*:
   It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
+
+***
 
 ##### Avoid deep nesting
 >  Try not to nest more than 3 levels deep.
@@ -215,6 +237,42 @@ really_descriptive_name(undefined) ->
 
 *Reasoning*:
   Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
+
+***
+
+##### More, smaller functions over case expressions
+>  Use pattern-maching in clause functions rather than case's. Specially important if the case is:
+>  - the top-level expression of the function
+>  - huge
+
+```erlang
+% bad
+my_fun(Arg) ->
+  case Arg of
+    option1 -> process1();
+    option2 -> process2()
+  end.
+
+my_other_fun(Arg) ->
+  …
+  case Something of
+    option1 ->
+      …multiple lines of code…;
+    option2 ->
+      _multiple lines of code…;
+    …many other options…
+  end,
+  ….
+
+% good
+my_fun(option1) -> process1();
+my_fun(option2) -> process2().
+
+my_other_fun(Arg) ->
+  …
+  something_to_do_with(Something),
+  ….
+```
 
 ##### Group functions logically
 >  Try to always separate **PRIVATE** and **PUBLIC** functions in groups, with the public ones first, unless it helps readability and code discovery.
@@ -276,20 +334,78 @@ private3(Atom) -> Atom.
 *Reasoning*:
   Well structured code is easier to read/understand/modify.
 
+***
+
 ##### No God modules
 >  Don't design your system using **god**  modules (modules that have a huge number of functions and/or deal with very unrelated things)
 
+***
+
 ##### Simple unit tests
 >  Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't pur more than 1 or 2 asserts per test
+
+***
 
 ##### Honor DRY
 
 This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
 
+***
+
 ##### Avoid dynamic calls
 >  If there is no specific need for it, don't use dynamic function calling.
 
+##### Group modules in subdirectories by functionality
+>  When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
+
+Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
+
+##### Don't write spaghetti code
+>  Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
+
+```
+% bad
+Organizations =
+    [binary_to_list(Org)
+     || Org <- autocomplete_db:smembers(
+                case Product of
+                    consumer -> <<"organizations">>;
+                    spot -> <<"product:", (?SPOTMD_KEY)/binary, ":organizations">>;
+                    whisper -> <<"product:", (?WHISPER_KEY)/binary, ":organizations">>
+                end)],
+
+% good
+Organizations =
+  [binary_to_list(Org) || <- Org <- product_organizations(Product)],
+```
+
+### Syntax
+
+Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
+
+##### Avoid if expressions
+>  Don't use `if`.
+
+```erlang
+% bad
+if
+  SomethingIsTrue -> do_something();
+  true -> default()
+end
+
+% good
+case Something of
+  an_appropriately_named_thing -> good(not_a_boolean);
+  _ -> default()
+end
+```
+
+*Reasoning*:
+  Clarity of intention and using the right tool for the job.
+
 ### Naming
+
+***
 
 ##### Be consistent when naming concepts
 >  Use the same variable name for the same concept everywhere (even in different modules).
@@ -313,6 +429,38 @@ my_other_function(OrganizationID) -> …
 *Reasoning*:
   When trying to figure out all the places where an ``OrgID`` is needed (e.g. if we want to change it from ``string`` to ``binary``), it's way easier if we can just grep for ``OrgID`` instead of having to check all possible names.
 
+##### Explicit state should be explicitly named
+>  Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
+
+##### Don't use _Ignored variables
+>  Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it. Say what you mean, mean what you say.
+
+```erlang
+% bad
+function(_Var) ->
+  …
+  other_function(_Var),
+  …
+```
+
+***
+
+##### Avoid boolean parameters
+>   Don't use boolean parameters
+
+```erlang
+% bad
+square:draw(EdgeLength, true).
+square:draw(EdgeLength, false).
+
+% good
+square:draw(EdgeLength, full).
+square:draw(EdgeLength, empty).
+```
+
+*Reasoning*:
+  Clarity of intention and not requiring the reader to check the function definition.
+
 ##### 
 >  Stick to one convention when naming modules (i.e: tt_something vs ttsomething vs something).
 
@@ -321,6 +469,20 @@ my_other_function(OrganizationID) -> …
 ### Exceptions
 
 ### Strings
+
+##### IOLists over string concatenation
+>  Use iolists instead of string concatenation whenever possible
+
+```erlang
+% bad
+"/users/" ++ UserId ++ "/events/" ++ EventsId
+
+% good
+["/users/", UserId, "/events/", EventsId]
+```
+
+*Reasoning*:
+  Performance :P
 
 ### Macros
 
@@ -379,9 +541,50 @@ calc(Options) ->
 *Reasoning*:
   Dialyzer output is complicated as is, and is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
 
+##### Avoid records in specs
+>  Avoid using records in your specs, use types.
+
+```erlang
+% bad
+-record(state, {field1, field2}).
+
+-spec function(#state{}) -> #state{}.
+function(State) ->
+ % ... do something,
+ NewState.
+
+% good
+-record(state, {field1, field2}).
+-type state() :: #state{}.
+
+-spec function(state())) -> state()).
+function(State) ->
+ % ... do something,
+ NewState.
+```
+
+##### Use -callback attributes over behaviour_info/1.
+>  Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions. In general, avoid deprecated functionality.
+
 ##### Lock your dependencies
 >  In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
 
 ### Tools
+
+##### Loud errors
+>  Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace so that somebody watching it can understand what's happening
+
+##### Properly use logging levels
+>  When using lager, use the different logging levels with the following meanings:
+
+##### meanings
+  * ``debug``: Very low-level info, that may cover your screen and don't let you type in it :P
+  * ``info``: The system's life, in some detail. Things that happen usually, but not all the time. You should be able to use the console with acceptable interruptions in this level.
+  * ``notice``: Meaningful things that are worth noticing, like the startup or termination of supervisors or important gen_servers, etc…
+  * ``warning``: Handled errors, the system keeps working as usual, but something out of the ordinary happened
+  * ``error``: Something bad and unexpected happen, usually an exception or error (**DO** log the **stack trace** here)
+  * ``critical``: The system (or a part of it) crashed and somebody should be informed and take action about it
+  * ``alert``:
+  * ``emergency``:
 
 ## Suggestions & Great Ideas
