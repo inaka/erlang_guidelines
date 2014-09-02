@@ -28,9 +28,9 @@ Table of Contents:
     * [Explicit state should be explicitly named](#explicit-state-should-be-explicitly-named)
     * [Don't use _Ignored variables](#dont-use-ignored-variables)
     * [Avoid boolean parameters](#avoid-boolean-parameters)
+    * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
   * [Design](#design)
-  * [Comments](#comments)
-  * [Exceptions](#exceptions)
+    * [Separate your concerns](#separate-your-concerns)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -53,9 +53,8 @@ Table of Contents:
 ### Source Code Layout
 
 ***
-
 ##### Spaces over tabs
->  Spaces over tabs, 2 space indentation.
+> Spaces over tabs, 2 space indentation.
 
 ```erlang
 % bad (inconsistent)
@@ -120,13 +119,11 @@ stop(EpisodeName) ->
   end.
 ```
 
-*Reasoning*:
-  This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
+*Reasoning*: This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
 ***
-
 ##### Use your spacebar
->  Surround operators and commas with spaces.
+> Surround operators and commas with spaces.
 
 ```erlang
 % bad
@@ -136,13 +133,11 @@ my_function(My,Space,Bar)->[is,not,working].
 my_function(Hey, Now, It) -> ["works" ++ "again" | [hooray]]].
 ```
 
-*Reasoning*:
-  Again, easier to find / read / etc.
+*Reasoning*: Again, easier to find / read / etc.
 
 ***
-
 ##### 80-90 column per line
->  Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
+> Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
 
 ```erlang
 % bad
@@ -161,9 +156,8 @@ function1([Foo, Bar | Rest], Arg2) ->
 ```
 
 ***
-
 ##### Maintain existing style
->  When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
+> When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
 
 ```erlang
 % bad
@@ -182,13 +176,12 @@ function1([Foo, Bar | Rest], Arg2) ->
          ]).
 ```
 
-*Reasoning*:
-  It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
+*Reasoning*: It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
 
 ***
 
 ##### Avoid deep nesting
->  Try not to nest more than 3 levels deep.
+> Try not to nest more than 3 levels deep.
 
 ```erlang
 % bad
@@ -235,15 +228,13 @@ really_descriptive_name(undefined) ->
   error(my_application_error).
 ```
 
-*Reasoning*:
-  Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
+*Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
 
 ***
-
 ##### More, smaller functions over case expressions
->  Use pattern-maching in clause functions rather than case's. Specially important if the case is:
->  - the top-level expression of the function
->  - huge
+> Use pattern-maching in clause functions rather than case's. Specially important if the case is:
+> - the top-level expression of the function
+> - huge
 
 ```erlang
 % bad
@@ -274,8 +265,9 @@ my_other_fun(Arg) ->
   ….
 ```
 
+***
 ##### Group functions logically
->  Try to always separate **PRIVATE** and **PUBLIC** functions in groups, with the public ones first, unless it helps readability and code discovery.
+> Try to always separate **PRIVATE** and **PUBLIC** functions in groups, with the public ones first, unless it helps readability and code discovery.
 
 ```erlang
 % bad
@@ -331,37 +323,33 @@ private2(Atom) -> private3(Atom).
 private3(Atom) -> Atom.
 ```
 
-*Reasoning*:
-  Well structured code is easier to read/understand/modify.
+*Reasoning*: Well structured code is easier to read/understand/modify.
 
 ***
-
 ##### No God modules
->  Don't design your system using **god**  modules (modules that have a huge number of functions and/or deal with very unrelated things)
+> Don't design your system using **god**  modules (modules that have a huge number of functions and/or deal with very unrelated things)
 
 ***
-
 ##### Simple unit tests
->  Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't pur more than 1 or 2 asserts per test
+> Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't pur more than 1 or 2 asserts per test
 
 ***
-
 ##### Honor DRY
-
-This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
+> This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
 
 ***
-
 ##### Avoid dynamic calls
->  If there is no specific need for it, don't use dynamic function calling.
+> If there is no specific need for it, don't use dynamic function calling.
 
+***
 ##### Group modules in subdirectories by functionality
->  When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
+> When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
 
 Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
 
+***
 ##### Don't write spaghetti code
->  Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
+> Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
 
 ```
 % bad
@@ -383,8 +371,9 @@ Organizations =
 
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
 
+***
 ##### Avoid if expressions
->  Don't use `if`.
+> Don't use `if`.
 
 ```erlang
 % bad
@@ -400,15 +389,13 @@ case Something of
 end
 ```
 
-*Reasoning*:
-  Clarity of intention and using the right tool for the job.
+*Reasoning*: Clarity of intention and using the right tool for the job.
 
 ### Naming
 
 ***
-
 ##### Be consistent when naming concepts
->  Use the same variable name for the same concept everywhere (even in different modules).
+> Use the same variable name for the same concept everywhere (even in different modules).
 
 ```erlang
 % bad
@@ -426,14 +413,15 @@ my_other_function(OrganizationID) -> …
 …
 ```
 
-*Reasoning*:
-  When trying to figure out all the places where an ``OrgID`` is needed (e.g. if we want to change it from ``string`` to ``binary``), it's way easier if we can just grep for ``OrgID`` instead of having to check all possible names.
+*Reasoning*: When trying to figure out all the places where an ``OrgID`` is needed (e.g. if we want to change it from ``string`` to ``binary``), it's way easier if we can just grep for ``OrgID`` instead of having to check all possible names.
 
+***
 ##### Explicit state should be explicitly named
->  Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
+> Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
 
+***
 ##### Don't use _Ignored variables
->  Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it. Say what you mean, mean what you say.
+> Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it. Say what you mean, mean what you say.
 
 ```erlang
 % bad
@@ -444,9 +432,8 @@ function(_Var) ->
 ```
 
 ***
-
 ##### Avoid boolean parameters
->   Don't use boolean parameters
+> Don't use boolean parameters (i.e. `true` and `false`) to control clause selection.
 
 ```erlang
 % bad
@@ -458,20 +445,76 @@ square:draw(EdgeLength, full).
 square:draw(EdgeLength, empty).
 ```
 
-*Reasoning*:
-  Clarity of intention and not requiring the reader to check the function definition.
+*Reasoning*: Clarity of intention and not requiring the reader to check the function definition.
 
-##### 
->  Stick to one convention when naming modules (i.e: tt_something vs ttsomething vs something).
+***
+##### Stick to one convention for naming modules
+> Stick to one convention when naming modules (i.e: tt_something vs ttsomething vs something).
 
-### Comments
+### Design
 
-### Exceptions
+***
+##### Separate your concerns
+> Functions should have one clearly enunciated concern.
+
+```
+% very bad
+process(Path, #request{method='POST', headers=Headers, q=Params}) ->
+    ?DEBUG_MSG("Signup params: ~p", [Params]),
+    %% required params
+    Reqd_Props = ["password", "email"],
+    [Password, Emails]
+        = Reqd_Values = [proplists:get_value(P, Params) || P <- Reqd_Props],
+    Missing_Params = [V || V <- Reqd_Values, V =:= undefined],
+    case length(Missing_Params) of
+        Missing_Count when Missing_Count > 0 ->
+            ?WARN_MSG("Received a signup request with missing params.  Params=~p", [Params]),
+            {?HTTP_BAD_REQUEST, ?JSON_HDR, ""};
+        _All_Reqd_Params_Present ->
+            Opt_Props  = ["phone_number", "first_name", "last_name", "birthday", "gender"],
+            [Phones, First, Last, Birth, Gender] = [proplists:get_value(P, Params) || P <- Opt_Props],
+
+            Phone_Numbers = case Phones of undefined -> []; Phones -> string:tokens(Phones, ",") end,
+            Email_Addresses = string:tokens(Emails, ","), %% This one is required, can't be undefined
+
+            case account:validate_for_create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, "") of
+                {error, Error_Message} -> {?HTTP_CONFLICT, ?JSON_HDR, "{\"error\": \"" ++ Error_Message ++ "\"}"};
+                ok                     ->
+                    %% TODO: add the right client record via similar call to regular acct signup
+                    case account:create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, true, ?SIGNUP_SOURCE_WEB_CONSOLE, #client{}) of
+                        {created, Token, Xmpp_Password, Resource} ->
+                            ?TRACE_HTTP_REQUEST(Token, Path, Headers, Params),
+                            Account_Details = #account{token =           Token,
+                                                       consumer_key =    ?SPOTMD_KEY,
+                                                       consumer_name =   "Spot.MD",
+                                                       first_name =      First,
+                                                       last_name =       Last,
+                                                       birthday  = Birth,
+                                                       gender = Gender,
+                                                       created_on =      support:now_for_timestamp(),
+                                                       unverified_phone_numbers = Phone_Numbers,
+                                                       unverified_email_addresses = Email_Addresses,
+                                                       time_to_live =    ?DEFAULT_TIME_TO_LIVE,
+                                                       account_id =      "0",
+                                                       hashed_password = sha2:hexdigest256(Password ++ "0"),
+                                                       delete_on_read =  ?DEFAULT_DELETE_ON_READ},
+                            account:set_account_details_on_create(Account_Details),
+                            account:auto_join_organizations(Account_Details),
+                            autocomplete:index_add(Token, account, ?SPOTMD_KEY),
+                            Response_Json = "{\"result\": {"
+                                "\"token\": \"" ++ Token ++ "\", "
+                                "\"resource\": \"" ++ Resource ++ "\", "
+                                "\"xmpp_password\": \"" ++ Xmpp_Password ++ "\"}}",
+                            ?TRACE_HTTP_RESPONSE(Token, Path, ?HTTP_CREATED, ?JSON_HDR, Response_Json),
+                            {?HTTP_CREATED, ?JSON_HDR, Response_Json}
+                    end
+```
 
 ### Strings
 
+***
 ##### IOLists over string concatenation
->  Use iolists instead of string concatenation whenever possible
+> Use iolists instead of string concatenation whenever possible
 
 ```erlang
 % bad
@@ -481,13 +524,12 @@ square:draw(EdgeLength, empty).
 ["/users/", UserId, "/events/", EventsId]
 ```
 
-*Reasoning*:
-  Performance :P
+*Reasoning*: Performance
 
 ### Macros
 
 ##### Uppercase macros
->  Macros should be named in ALL_UPPER_CASE:
+> Macros should be named in ALL_UPPER_CASE:
 
 ```erlang
 % bad
@@ -501,11 +543,11 @@ square:draw(EdgeLength, empty).
 -define(?YOUR_MACRO, '...').
 ```
 
-*Reasoning*:
-  It makes it easier not to duplicate macro names, to find them through grep, etc.
+*Reasoning*: It makes it easier not to duplicate macro names, to find them through grep, etc.
 
+***
 ##### No module or function name macros
->  Don't use macros for module or function names
+> Don't use macros for module or function names
 
 ```erlang
 % bad
@@ -517,13 +559,13 @@ function() ->
   some_module:function(Args).
 ```
 
-*Reasoning*:
-  Copying lines of code to the console for debugging (something that happens *a lot*) becomes a really hard task if we need to manually replace all the macros.
+*Reasoning*: Copying lines of code to the console for debugging (something that happens *a lot*) becomes a really hard task if we need to manually replace all the macros.
 
 ### Misc
 
+***
 ##### Write function specs
->  Write the **-spec**'s for your public fun's, and for private fun's when it adds real value for documentation purposes. Define as many types as needed.
+> Write the **-spec**'s for your public fun's, and for private fun's when it adds real value for documentation purposes. Define as many types as needed.
 
 ```erlang
 -type option_id():: atom().
@@ -538,11 +580,11 @@ calc(Options) ->
   calc(Options, lists:sum(TotalCounts)).er
 ```
 
-*Reasoning*:
-  Dialyzer output is complicated as is, and is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
+*Reasoning*: Dialyzer output is complicated as is, and is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
 
+***
 ##### Avoid records in specs
->  Avoid using records in your specs, use types.
+> Avoid using records in your specs, use types.
 
 ```erlang
 % bad
@@ -563,21 +605,25 @@ function(State) ->
  NewState.
 ```
 
+***
 ##### Use -callback attributes over behaviour_info/1.
->  Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions. In general, avoid deprecated functionality.
+> Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions. In general, avoid deprecated functionality.
 
+***
 ##### Lock your dependencies
->  In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
+> In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
 
 ### Tools
 
+***
 ##### Loud errors
->  Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace so that somebody watching it can understand what's happening
+> Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace so that somebody watching it can understand what's happening
 
+***
 ##### Properly use logging levels
->  When using lager, use the different logging levels with the following meanings:
+> When using lager, use the different logging levels with the following meanings:
 
-##### meanings
+*Meanings*:
   * ``debug``: Very low-level info, that may cover your screen and don't let you type in it :P
   * ``info``: The system's life, in some detail. Things that happen usually, but not all the time. You should be able to use the console with acceptable interruptions in this level.
   * ``notice``: Meaningful things that are worth noticing, like the startup or termination of supervisors or important gen_servers, etc…
@@ -588,3 +634,6 @@ function(State) ->
   * ``emergency``:
 
 ## Suggestions & Great Ideas
+
+Things that should be considered when writing code, but do not cause a PR rejection.
+
