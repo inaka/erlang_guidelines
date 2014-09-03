@@ -539,6 +539,7 @@ process(Path, #request{method='POST', headers=Headers, q=Params}) ->
 
 ### Macros
 
+***
 ##### Uppercase macros
 > Macros should be named in ALL_UPPER_CASE:
 
@@ -732,4 +733,3 @@ One aspect of choosing where want you to crash is how you design your API:
 do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
 If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
-
