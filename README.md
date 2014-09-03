@@ -367,15 +367,15 @@ Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle
 Organizations =
     [binary_to_list(Org)
      || Org <- autocomplete_db:smembers(
-                case Product of
-                    consumer -> <<"organizations">>;
-                    spot -> <<"product:", (?SPOTMD_KEY)/binary, ":organizations">>;
-                    whisper -> <<"product:", (?WHISPER_KEY)/binary, ":organizations">>
+                case Client of
+                    weiland_yutani -> <<"weiland_yutani:organizations">>;
+                    aperture_science -> <<"client:", (?AP_SC_KEY)/binary, ":orgs">>;
+                    wayne_enterprises -> <<"client:", (?WAY_ENT_KEY)/binary", ":organisations">>
                 end)],
 
 % good
 Organizations =
-  [binary_to_list(Org) || <- Org <- product_organizations(Product)],
+  [binary_to_list(Org) || <- Org <- client_bin_key(Client)],
 ```
 
 ### Syntax
