@@ -460,7 +460,7 @@ square:draw(EdgeLength, empty).
 
 ***
 ##### Stick to one convention for naming modules
-> Stick to one convention when naming modules (i.e: tt_something vs ttsomething vs something).
+> Stick to one convention when naming modules (i.e: ik_something vs iksomething vs something).
 
 ### Design
 
