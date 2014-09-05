@@ -67,7 +67,7 @@ Table of Contents:
 ##### Spaces over tabs
 > Spaces over tabs, 2 space indentation.
 
-*Examples*: [spaces.erl](src/spaces.erl)
+*Examples*: [indent.erl](src/indent.erl)
 
 *Reasoning*: This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
@@ -75,13 +75,7 @@ Table of Contents:
 ##### Use your spacebar
 > Surround operators and commas with spaces.
 
-```erlang
-% bad
-my_function(My,Space,Bar)->[is,not,working].
-
-% good
-my_function(Hey, Now, It) -> ["works" ++ "again" | [hooray]]].
-```
+*Examples*: [spaces.erl](src/spaces.erl)
 
 *Reasoning*: Again, easier to find / read / etc.
 
