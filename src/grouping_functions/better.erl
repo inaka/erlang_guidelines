@@ -8,7 +8,8 @@ public1() ->
     {ok, X} -> public1(X);
     _ -> throw(cant_do)
   end.
-public1(X) -> private3(X). % This is a private function but it's obviously related just to the one before
+%% @doc This is a private function but it's related just to the one before
+public1(X) -> private3(X).
 
 public2() -> private2(private1()).
 
