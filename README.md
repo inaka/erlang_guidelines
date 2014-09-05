@@ -126,6 +126,10 @@ Table of Contents:
 ##### No God modules
 > Don't design your system using **god**  modules (modules that have a huge number of functions and/or deal with very unrelated things)
 
+*Examples*: [god](src/god.erl)
+
+*Reasoning*: God modules, like god objects, are modules that do too much or know too much. God modules usually come into existence by feature accretion. A beautiful, to-the-point module with one job, one responsibility done well, gains a function that is clearly related to its central mandate. Then another, which does the same thing but with different parameters. Then one day, you have a 6000-line module with 500 functions. Having modules (and functions) that do one and only one thing well makes it easy to explore and reason about code, and thus maintain it.
+
 ***
 ##### Simple unit tests
 > Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't pur more than 1 or 2 asserts per test
