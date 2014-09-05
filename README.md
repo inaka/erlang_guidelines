@@ -91,22 +91,7 @@ Table of Contents:
 ##### Maintain existing style
 > When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
 
-```erlang
-% bad
--exports([ function1
-         , i_like
-         , preceding_commas, i_dont, like_them
-         ]).
-
-% good
--exports([ function1
-         , i_like
-         , preceding_commas
-         , i_dont
-         , like_them
-         , but_i_respect_your_style
-         ]).
-```
+*Examples*: [existing_style](src/existing_style.erl)
 
 *Reasoning*: It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
 
