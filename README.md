@@ -67,7 +67,7 @@ Table of Contents:
 ##### Spaces over tabs
 > Spaces over tabs, 2 space indentation.
 
-!INCLUDE "chapters/preface.mdpp"
+*Examples*: [spaces.erl](src/spaces.erl)
 
 *Reasoning*: This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
