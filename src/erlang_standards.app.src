@@ -1,0 +1,8 @@
+{
+  application, erlang_standards,
+  [
+   {description, "Erlang Standards"},
+   {applications, []},
+   {modules, []}
+  ]
+}.

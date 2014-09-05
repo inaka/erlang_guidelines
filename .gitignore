@@ -1,0 +1,13 @@
+.eunit
+.rebar
+deps
+ebin
+*.o
+*.beam
+*.plt
+erl_crash.dump
+log*/
+.erlang.mk.packages.*
+
+# Ignore elvis escript
+elvis
