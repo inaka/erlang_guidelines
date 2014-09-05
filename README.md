@@ -110,92 +110,15 @@ Table of Contents:
 > - the top-level expression of the function
 > - huge
 
-```erlang
-% bad
-my_fun(Arg) ->
-  case Arg of
-    option1 -> process1();
-    option2 -> process2()
-  end.
+*Examples*: [smaller_functions](src/smaller_functions.erl)
 
-my_other_fun(Arg) ->
-  …
-  case Something of
-    option1 ->
-      …multiple lines of code…;
-    option2 ->
-      _multiple lines of code…;
-    …many other options…
-  end,
-  ….
-
-% good
-my_fun(option1) -> process1();
-my_fun(option2) -> process2().
-
-my_other_fun(Arg) ->
-  …
-  something_to_do_with(Something),
-  ….
-```
+*Reasoning:* it is usually the case that a case in a function body represents some sort of decision, and functions should be as simple as possible. If each branch of a decision's outcome is implemented as a function clause instead of as a case clause, the decision may be given a meaningful name. In other words, the case is acting as an 'anonymous function', which unless they are being used in the context of a higher-order function, merely obscure meaning.
 
 ***
 ##### Group functions logically
 > Try to always separate **PRIVATE** and **PUBLIC** functions in groups, with the public ones first, unless it helps readability and code discovery.
 
-```erlang
-% bad
--module(my_module).
--exports([public1/0, public2/0]).
-
-public1() -> private3(atom1).
-
-private1() -> atom2.
-
-public2() -> private2(private1()).
-
-private2(Atom) -> private3(Atom).
-
-private3(Atom) -> Atom.
-
-% not that bad
--module(my_module).
--exports([public1/0, public2/0]).
-
-public1() ->
-  case application:get_env(atom_for_public_1) of
-    {ok, X} -> public1(X);
-    _ -> throw(cant_do)
-  end.
-public1(X) -> private3(X). % This is a private function but it's obviously related just to the one before
-
-public2() -> private2(private1()).
-
-private1() -> atom2.
-
-private2(Atom) -> private3(Atom).
-
-private3(Atom) -> Atom.
-
-% good
--module(my_module).
--exports([public1/0, public2/0]).
-
-public1() ->
-  case application:get_env(atom_for_public_1) of
-    {ok, X} -> private3(X);
-    _ -> throw(cant_do)
-  end.
-
-public2() -> private2(private1()).
-
-%%% PRIVATE FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-private1() -> atom2.
-
-private2(Atom) -> private3(Atom).
-
-private3(Atom) -> Atom.
-```
+*Examples*: [grouping_functions](src/grouping_functions)
 
 *Reasoning*: Well structured code is easier to read/understand/modify.
 
