@@ -67,68 +67,7 @@ Table of Contents:
 ##### Spaces over tabs
 > Spaces over tabs, 2 space indentation.
 
-```erlang
-% bad (inconsistent)
-handle_info(timeout, State=#state{}) ->
-  try
-  EpisodeOnAir = State#state.on_air,
-  OrgId = State#state.org#org.id,
-  NextEpisode = conflux_db:episode_on_air(OrgId),
-  {ok, StateEpisode, NextStopTime, NewEpiName} =
-    case NextEpisode of
-      EpisodeOnAir -> {
-        ok,
-        EpisodeOnAir,
-        State#state.next_stop_time,
-        State#state.on_air_name
-      };
-      undefined ->
-        % No next episode, so let's see if we should keep this one on the air.
-        Now = calendar:datetime_to_gregorian_seconds(calendar:universal_time()),
-        if
-          Now >= State#state.next_stop_time ->
-            handle_cast({stop_on_air}, State),
-            {ok, undefined, 0, undefined};
-          true ->
-            lager:debug(
-              "Keeping current episode for another: ~p seconds",
-              [State#state.next_stop_time - Now]
-            ),
-
-% better but still bad (consistent but 4 spaces)
-handle_info({json, InitEvent}, State = #state{status = wait_for_init}) ->
-    lager:debug("New init message"),
-    NewVersion = State#state.version + 1,
-    VersionBin = conflux_utils:integer_to_binary(NewVersion),
-    VersionSuffix = integer_to_list(NewVersion) ++ ".json",
-    ChangesBin =
-        lists:foldr(
-            fun({json, Json}, _Acc) -> Json; %%NOTE: Init message renders everything before it invalid
-               (Change, Acc) ->
-                    try conflux_utils:json_encode(Change) of
-                        Json ->
-                            case Acc of
-                                <<>> -> Json;
-                                Acc -> <<Acc/binary, ",\n\t", Json/binary>>
-                            end
-                    catch
-                        _:Error ->
-                            lager:error("Comet: Invalid Json: ~p / Error: ~p", [Change, Error]),
-                            <<>>
-                    end
-            end, <<>>, State#state.changes),
-    spawn_backup(State),
-
-% good
-stop(EpisodeName) ->
-  case on_air(EpisodeName) of
-    undefined -> ok;
-    Pid ->
-      gen_server:cast(Pid, stop),
-      catch erlang:unregister(EpisodeName),
-      ok
-  end.
-```
+!INCLUDE "chapters/preface.mdpp"
 
 *Reasoning*: This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
