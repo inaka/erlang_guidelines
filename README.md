@@ -140,7 +140,11 @@ Table of Contents:
 
 ***
 ##### Honor DRY
-> This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
+> Don't write the same code in many places, use functions and variables for that
+
+*Examples*: [dry](src/dry.erl)
+
+*Reasoning*: This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
 
 ***
 ##### Avoid dynamic calls
