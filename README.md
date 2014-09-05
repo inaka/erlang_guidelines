@@ -128,11 +128,15 @@ Table of Contents:
 
 *Examples*: [god](src/god.erl)
 
-*Reasoning*: God modules, like god objects, are modules that do too much or know too much. God modules usually come into existence by feature accretion. A beautiful, to-the-point module with one job, one responsibility done well, gains a function that is clearly related to its central mandate. Then another, which does the same thing but with different parameters. Then one day, you have a 6000-line module with 500 functions. Having modules (and functions) that do one and only one thing well makes it easy to explore and reason about code, and thus maintain it.
+*Reasoning*: God modules, like god objects, are modules that do too much or know too much. God modules usually come into existence by feature accretion. A beautiful, to-the-point module with one job, one responsibility done well, gains a function. Then another, which does the same thing but with different parameters. Then one day, you have a 6000-line module with 500 functions. Having modules (and functions) that do one and only one thing well makes it easy to explore and reason about code, and thus maintain it.
 
 ***
 ##### Simple unit tests
-> Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't pur more than 1 or 2 asserts per test
+> Single responsibility applies to tests as well. When writing **unit** tests, keep them short and don't put more than 1 or 2 asserts per test
+
+*Examples*: [test_SUITE](src/test_SUITE.erl)
+
+*Reasoning*: Multiple tests can identify multiple errors in one run, if you put all the things you want to test into one test you'll have to fix one thing at a time until the test passes.
 
 ***
 ##### Honor DRY
