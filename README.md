@@ -83,21 +83,9 @@ Table of Contents:
 ##### 80-90 column per line
 > Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
 
-```erlang
-% bad
-function1([], Arg) ->
-  do_something(Arg).
-function1(Foo = #rec{field1 = FF1, field2 = FF2, field3 = FF3}, Bar = #rec{field1 = BF1, field2 = BF2, field3 = BF3} | Rest], Arg2) ->
-  do_something(FF1, FF2, FF3, BF1, BF2, BF3, function1(Rest, Arg2)).
+*Examples*: [col_width.erl](src/col_width.erl)
 
-% good
-function1([], Arg) ->
-  do_something(Arg).
-function1([Foo, Bar | Rest], Arg2) ->
-  Foo = #rec{field1 = FF1, field2 = FF2, field3 = FF3},
-  Bar = #rec{field1 = BF1, field2 = BF2, field3 = BF3},
-  do_something(FF1, FF2, FF3, BF1, BF2, BF3, function1(Rest, Arg2)).
-```
+*Reasoning*: Not having to scroll horizontally while editing is a HUGE gain. Also, in wider screens you can open two files: one beside the other.
 
 ***
 ##### Maintain existing style
