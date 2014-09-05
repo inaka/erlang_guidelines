@@ -100,50 +100,7 @@ Table of Contents:
 ##### Avoid deep nesting
 > Try not to nest more than 3 levels deep.
 
-```erlang
-% bad
-function1(Foo) ->
-  case Foo of
-    true ->
-      Bar = do_something(Foo),
-      case Bar of
-        {ok, WhatIReallyWanted} ->
-          try
-            InterimValue1 = this_might_blow_up(WhatIReallyWanted),
-            InterimValue2 = compute(InterimValue1),
-            get_final_value(InterimValue2)
-          catch
-            _:_ ->
-              % dont do this either, let it fail
-              io:format("something bad happened")
-          end;
-        undefined ->
-          error(my_application_error)
-      end;
-    false ->
-      io:format("Oh noes!")
-  end.
-
-% good
-function1(true) ->
-  Bar = do_something(Foo),
-  really_descriptive_name(Bar);
-function1(false) ->
-  io:format("Oh noes!").
-
-really_descriptive_name({ok, WhatIReallyWanted}) ->
-  try
-    InterimValue1 = this_might_blow_up(WhatIReallyWanted),
-    InterimValue2 = compute(InterimValue1),
-    get_final_value(InterimValue2)
-  catch
-    _:_ ->
-    % dont do this either, let it fail
-    io:format("something bad happened")
-    end;
-really_descriptive_name(undefined) ->
-  error(my_application_error).
-```
+*Examples*: [nesting](src/nesting.erl)
 
 *Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
 
