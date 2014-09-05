@@ -67,7 +67,7 @@ Table of Contents:
 ##### Spaces over tabs
 > Spaces over tabs, 2 space indentation.
 
-*Examples*: [indent.erl](src/indent.erl)
+*Examples*: [indent](src/indent.erl)
 
 *Reasoning*: This is *not* intended to allow deep nesting levels in the code. 2 spaces are enough if the code is clean enough, and the code looks more concise, allowing more characters in the same line.
 
@@ -75,7 +75,7 @@ Table of Contents:
 ##### Use your spacebar
 > Surround operators and commas with spaces.
 
-*Examples*: [spaces.erl](src/spaces.erl)
+*Examples*: [spaces](src/spaces.erl)
 
 *Reasoning*: Again, easier to find / read / etc.
 
@@ -83,7 +83,7 @@ Table of Contents:
 ##### 80-90 column per line
 > Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
 
-*Examples*: [col_width.erl](src/col_width.erl)
+*Examples*: [col_width](src/col_width.erl)
 
 *Reasoning*: Not having to scroll horizontally while editing is a HUGE gain. Also, in wider screens you can open two files: one beside the other.
 
