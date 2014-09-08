@@ -158,7 +158,9 @@ Table of Contents:
 ##### Group modules in subdirectories by functionality
 > When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
 
-Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
+*Reasoning*: That way it's easier to find what you need and determine what a certain module does.
+
+*Note*: Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
 
 ***
 ##### Don't write spaghetti code
