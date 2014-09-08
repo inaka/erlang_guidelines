@@ -166,21 +166,9 @@ Table of Contents:
 ##### Don't write spaghetti code
 > Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
 
-```
-% bad
-Organizations =
-    [binary_to_list(Org)
-     || Org <- autocomplete_db:smembers(
-                case Client of
-                    weiland_yutani -> <<"weiland_yutani:organizations">>;
-                    aperture_science -> <<"client:", (?AP_SC_KEY)/binary, ":orgs">>;
-                    wayne_enterprises -> <<"client:", (?WAY_ENT_KEY)/binary", ":organisations">>
-                end)],
+*Examples*: [spaghetti](src/spaghetti.erl)
 
-% good
-Organizations =
-  [binary_to_list(Org) || <- Org <- client_bin_key(Client)],
-```
+*Reasoning*: Spaghetti code is harder to read, understand and edit.
 
 ### Syntax
 
