@@ -150,6 +150,10 @@ Table of Contents:
 ##### Avoid dynamic calls
 > If there is no specific need for it, don't use dynamic function calling.
 
+*Examples*: [dyn_calls](src/dyn_calls.erl)
+
+*Reasoning*: Dynamic calls can't be checked by ``xref``, one of the most useful tools in the Erlang world.
+
 ***
 ##### Group modules in subdirectories by functionality
 > When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
