@@ -251,15 +251,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### No module or function name macros
 > Don't use macros for module or function names
 
-```erlang
-% bad
-function() ->
-  ?SM:function(Args).
-
-% good
-function() ->
-  some_module:function(Args).
-```
+*Examples*: [macro_mod_names](src/macro_mod_names.erl)
 
 *Reasoning*: Copying lines of code to the console for debugging (something that happens *a lot*) becomes a really hard task if we need to manually replace all the macros.
 
