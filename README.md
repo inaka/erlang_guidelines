@@ -225,6 +225,10 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Stick to one convention for naming modules
 > Stick to one convention when naming modules (i.e: ik_something vs iksomething vs something).
 
+*Examples*: [naming_modules](src/naming_modules)
+
+*Reasoning*: It gives coherence to your system.
+
 ### Design
 
 ***
