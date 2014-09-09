@@ -29,8 +29,6 @@ Table of Contents:
     * [Don't use _Ignored variables](#dont-use-_ignored-variables)
     * [Avoid boolean parameters](#avoid-boolean-parameters)
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
-  * [Design](#design)
-    * [Separate your concerns](#separate-your-concerns)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -150,31 +148,25 @@ Table of Contents:
 ##### Avoid dynamic calls
 > If there is no specific need for it, don't use dynamic function calling.
 
+*Examples*: [dyn_calls](src/dyn_calls.erl)
+
+*Reasoning*: Dynamic calls can't be checked by ``xref``, one of the most useful tools in the Erlang world.
+
 ***
 ##### Group modules in subdirectories by functionality
 > When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
 
-Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
+*Reasoning*: That way it's easier to find what you need and determine what a certain module does.
+
+*Note*: Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
 
 ***
 ##### Don't write spaghetti code
 > Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
 
-```
-% bad
-Organizations =
-    [binary_to_list(Org)
-     || Org <- autocomplete_db:smembers(
-                case Client of
-                    weiland_yutani -> <<"weiland_yutani:organizations">>;
-                    aperture_science -> <<"client:", (?AP_SC_KEY)/binary, ":orgs">>;
-                    wayne_enterprises -> <<"client:", (?WAY_ENT_KEY)/binary", ":organisations">>
-                end)],
+*Examples*: [spaghetti](src/spaghetti.erl)
 
-% good
-Organizations =
-  [binary_to_list(Org) || <- Org <- client_bin_key(Client)],
-```
+*Reasoning*: Spaghetti code is harder to read, understand and edit.
 
 ### Syntax
 
@@ -184,21 +176,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Avoid if expressions
 > Don't use `if`.
 
-```erlang
-% bad
-if
-  SomethingIsTrue -> do_something();
-  true -> default()
-end
+*Examples*: [no_if](src/no_if.erl)
 
-% good
-case Something of
-  an_appropriately_named_thing -> good(not_a_boolean);
-  _ -> default()
-end
-```
+*Reasoning*: In some circumstances `if` introduces static boolean logic in your code, reducing code flexibility. In other cases, a `case` or a function call with pattern matching in its clauses is just more declarative. For newcommers (that have learned to use `if` in other languages), Erlang's `if` can be either hard to understand or easily abused.
 
-*Reasoning*: Clarity of intention and using the right tool for the job.
+*Debate*:
+- [From OOP world](http://antiifcampaign.com/)
+- [In this repo](issues/14)
+- [In erlang-questions](http://erlang.org/pipermail/erlang-questions/2014-September/080827.html)
 
 ### Naming
 
@@ -206,118 +191,41 @@ end
 ##### Be consistent when naming concepts
 > Use the same variable name for the same concept everywhere (even in different modules).
 
-```erlang
-% bad
-…
-my_function(OrganizationID) -> …
-…
-my_other_function(OrgID) -> …
-…
-
-% good
-…
-my_function(OrganizationID) -> …
-…
-my_other_function(OrganizationID) -> …
-…
-```
+*Examples*: [consistency](src/consistency.erl)
 
 *Reasoning*: When trying to figure out all the places where an ``OrgID`` is needed (e.g. if we want to change it from ``string`` to ``binary``), it's way easier if we can just grep for ``OrgID`` instead of having to check all possible names.
 
 ***
 ##### Explicit state should be explicitly named
 > Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
+ 
+*Examples*: [state](src/state)
+
+*Reasoning*: OTP behaviours implementations usually require a state, and if it always have the same name it makes it more clearly recognizable. Defining a type for it, helps _dialyzer_ detect leaks (where an internal type as the state is used outside of the module).
 
 ***
 ##### Don't use _Ignored variables
-> Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it. Say what you mean, mean what you say.
+> Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it.
 
-```erlang
-% bad
-function(_Var) ->
-  …
-  other_function(_Var),
-  …
-```
+*Examples*: [ignored_vars](src/ignored_vars.erl)
+
+*Reasoning*: They are **not** supposed to be used.
 
 ***
 ##### Avoid boolean parameters
 > Don't use boolean parameters (i.e. `true` and `false`) to control clause selection.
 
-```erlang
-% bad
-square:draw(EdgeLength, true).
-square:draw(EdgeLength, false).
+*Examples*: [boolean_params](src/boolean_params.erl)
 
-% good
-square:draw(EdgeLength, full).
-square:draw(EdgeLength, empty).
-```
-
-*Reasoning*: Clarity of intention and not requiring the reader to check the function definition.
+*Reasoning*: Clarity of intention and not requiring the reader to check the function definition to understand what it does.
 
 ***
 ##### Stick to one convention for naming modules
 > Stick to one convention when naming modules (i.e: ik_something vs iksomething vs something).
 
-### Design
+*Examples*: [naming_modules](src/naming_modules)
 
-***
-##### Separate your concerns
-> Functions should have one clearly enunciated concern.
-
-```
-% very bad
-process(Path, #request{method='POST', headers=Headers, q=Params}) ->
-    ?DEBUG_MSG("Signup params: ~p", [Params]),
-    %% required params
-    Reqd_Props = ["password", "email"],
-    [Password, Emails]
-        = Reqd_Values = [proplists:get_value(P, Params) || P <- Reqd_Props],
-    Missing_Params = [V || V <- Reqd_Values, V =:= undefined],
-    case length(Missing_Params) of
-        Missing_Count when Missing_Count > 0 ->
-            ?WARN_MSG("Received a signup request with missing params.  Params=~p", [Params]),
-            {?HTTP_BAD_REQUEST, ?JSON_HDR, ""};
-        _All_Reqd_Params_Present ->
-            Opt_Props  = ["phone_number", "first_name", "last_name", "birthday", "gender"],
-            [Phones, First, Last, Birth, Gender] = [proplists:get_value(P, Params) || P <- Opt_Props],
-
-            Phone_Numbers = case Phones of undefined -> []; Phones -> string:tokens(Phones, ",") end,
-            Email_Addresses = string:tokens(Emails, ","), %% This one is required, can't be undefined
-
-            case account:validate_for_create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, "") of
-                {error, Error_Message} -> {?HTTP_CONFLICT, ?JSON_HDR, "{\"error\": \"" ++ Error_Message ++ "\"}"};
-                ok                     ->
-                    %% TODO: add the right client record via similar call to regular acct signup
-                    case account:create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, true, ?SIGNUP_SOURCE_WEB_CONSOLE, #client{}) of
-                        {created, Token, Xmpp_Password, Resource} ->
-                            ?TRACE_HTTP_REQUEST(Token, Path, Headers, Params),
-                            Account_Details = #account{token =           Token,
-                                                       consumer_key =    ?SPOTMD_KEY,
-                                                       consumer_name =   "Spot.MD",
-                                                       first_name =      First,
-                                                       last_name =       Last,
-                                                       birthday  = Birth,
-                                                       gender = Gender,
-                                                       created_on =      support:now_for_timestamp(),
-                                                       unverified_phone_numbers = Phone_Numbers,
-                                                       unverified_email_addresses = Email_Addresses,
-                                                       time_to_live =    ?DEFAULT_TIME_TO_LIVE,
-                                                       account_id =      "0",
-                                                       hashed_password = sha2:hexdigest256(Password ++ "0"),
-                                                       delete_on_read =  ?DEFAULT_DELETE_ON_READ},
-                            account:set_account_details_on_create(Account_Details),
-                            account:auto_join_organizations(Account_Details),
-                            autocomplete:index_add(Token, account, ?SPOTMD_KEY),
-                            Response_Json = "{\"result\": {"
-                                "\"token\": \"" ++ Token ++ "\", "
-                                "\"resource\": \"" ++ Resource ++ "\", "
-                                "\"xmpp_password\": \"" ++ Xmpp_Password ++ "\"}}",
-                            ?TRACE_HTTP_RESPONSE(Token, Path, ?HTTP_CREATED, ?JSON_HDR, Response_Json),
-                            {?HTTP_CREATED, ?JSON_HDR, Response_Json}
-                    end
-```
+*Reasoning*: It gives coherence to your system.
 
 ### Strings
 
