@@ -233,13 +233,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### IOLists over string concatenation
 > Use iolists instead of string concatenation whenever possible
 
-```erlang
-% bad
-"/users/" ++ UserId ++ "/events/" ++ EventsId
-
-% good
-["/users/", UserId, "/events/", EventsId]
-```
+*Examples*: [iolists](src/iolists.erl)
 
 *Reasoning*: Performance
 
