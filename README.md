@@ -269,24 +269,9 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Avoid records in specs
 > Avoid using records in your specs, use types.
 
-```erlang
-% bad
--record(state, {field1, field2}).
+*Examples*: [record_spec](src/record_spec.erl)
 
--spec function(#state{}) -> #state{}.
-function(State) ->
- % ... do something,
- NewState.
-
-% good
--record(state, {field1, field2}).
--type state() :: #state{}.
-
--spec function(state())) -> state()).
-function(State) ->
- % ... do something,
- NewState.
-```
+*Reasoning*: Types can be exported, which aids documentation and, using ``opaque`` types it also helps with encapsulation and abstraction.
 
 ***
 ##### Use -callback attributes over behaviour_info/1.
