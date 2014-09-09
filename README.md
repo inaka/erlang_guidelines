@@ -217,17 +217,9 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Avoid boolean parameters
 > Don't use boolean parameters (i.e. `true` and `false`) to control clause selection.
 
-```erlang
-% bad
-square:draw(EdgeLength, true).
-square:draw(EdgeLength, false).
+*Examples*: [boolean_params](src/boolean_params.erl)
 
-% good
-square:draw(EdgeLength, full).
-square:draw(EdgeLength, empty).
-```
-
-*Reasoning*: Clarity of intention and not requiring the reader to check the function definition.
+*Reasoning*: Clarity of intention and not requiring the reader to check the function definition to understand what it does.
 
 ***
 ##### Stick to one convention for naming modules
