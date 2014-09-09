@@ -243,19 +243,9 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Uppercase macros
 > Macros should be named in ALL_UPPER_CASE:
 
-```erlang
-% bad
--define(?my_macro, '...').
--define(?MYMACRO, '...').
--define(?My_Macro, '...').
--define(?_mY_L33t_M@Cr0, '...').
+*Examples*: [macro_names](src/macro_names.erl)
 
-% good
--define(?MY_MACRO, '...').
--define(?YOUR_MACRO, '...').
-```
-
-*Reasoning*: It makes it easier not to duplicate macro names, to find them through grep, etc.
+*Reasoning*: It makes it easier not to duplicate macro names, to find them using grep, etc.
 
 ***
 ##### No module or function name macros
