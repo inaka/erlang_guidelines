@@ -200,6 +200,10 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ***
 ##### Explicit state should be explicitly named
 > Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
+ 
+*Examples*: [state](src/state)
+
+*Reasoning*: OTP behaviours implementations usually require a state, and if it always have the same name it makes it more clearly recognizable. Defining a type for it, helps _dialyzer_ detect leaks (where an internal type as the state is used outside of the module).
 
 ***
 ##### Don't use _Ignored variables
