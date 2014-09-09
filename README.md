@@ -178,21 +178,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Avoid if expressions
 > Don't use `if`.
 
-```erlang
-% bad
-if
-  SomethingIsTrue -> do_something();
-  true -> default()
-end
+*Examples*: [no_if](src/no_if.erl)
 
-% good
-case Something of
-  an_appropriately_named_thing -> good(not_a_boolean);
-  _ -> default()
-end
-```
+*Reasoning*: In some circumstances `if` introduces static boolean logic in your code, reducing code flexibility. In other cases, a `case` or a function call with pattern matching in its clauses is just more declarative. For newcommers (that have learned to use `if` in other languages), Erlang's `if` can be either hard to understand or easily abused.
 
-*Reasoning*: Clarity of intention and using the right tool for the job.
+*Debate*:
+- [From OOP world](http://antiifcampaign.com/)
+- [In this repo](issues/14)
+- [In erlang-questions](http://erlang.org/pipermail/erlang-questions/2014-September/080827.html)
 
 ### Naming
 
