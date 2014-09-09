@@ -275,7 +275,11 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Use -callback attributes over behaviour_info/1.
-> Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions. In general, avoid deprecated functionality.
+> Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions.
+
+*Examples*: [callbacks](src/callbacks)
+
+*Reasoning*: Avoid deprecated functionality
 
 ***
 ##### Lock your dependencies
