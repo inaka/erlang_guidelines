@@ -29,8 +29,6 @@ Table of Contents:
     * [Don't use _Ignored variables](#dont-use-_ignored-variables)
     * [Avoid boolean parameters](#avoid-boolean-parameters)
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
-  * [Design](#design)
-    * [Separate your concerns](#separate-your-concerns)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -228,65 +226,6 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [naming_modules](src/naming_modules)
 
 *Reasoning*: It gives coherence to your system.
-
-### Design
-
-***
-##### Separate your concerns
-> Functions should have one clearly enunciated concern.
-
-```
-% very bad
-process(Path, #request{method='POST', headers=Headers, q=Params}) ->
-    ?DEBUG_MSG("Signup params: ~p", [Params]),
-    %% required params
-    Reqd_Props = ["password", "email"],
-    [Password, Emails]
-        = Reqd_Values = [proplists:get_value(P, Params) || P <- Reqd_Props],
-    Missing_Params = [V || V <- Reqd_Values, V =:= undefined],
-    case length(Missing_Params) of
-        Missing_Count when Missing_Count > 0 ->
-            ?WARN_MSG("Received a signup request with missing params.  Params=~p", [Params]),
-            {?HTTP_BAD_REQUEST, ?JSON_HDR, ""};
-        _All_Reqd_Params_Present ->
-            Opt_Props  = ["phone_number", "first_name", "last_name", "birthday", "gender"],
-            [Phones, First, Last, Birth, Gender] = [proplists:get_value(P, Params) || P <- Opt_Props],
-
-            Phone_Numbers = case Phones of undefined -> []; Phones -> string:tokens(Phones, ",") end,
-            Email_Addresses = string:tokens(Emails, ","), %% This one is required, can't be undefined
-
-            case account:validate_for_create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, "") of
-                {error, Error_Message} -> {?HTTP_CONFLICT, ?JSON_HDR, "{\"error\": \"" ++ Error_Message ++ "\"}"};
-                ok                     ->
-                    %% TODO: add the right client record via similar call to regular acct signup
-                    case account:create(?SPOTMD_KEY, Email_Addresses, Phone_Numbers, true, ?SIGNUP_SOURCE_WEB_CONSOLE, #client{}) of
-                        {created, Token, Xmpp_Password, Resource} ->
-                            ?TRACE_HTTP_REQUEST(Token, Path, Headers, Params),
-                            Account_Details = #account{token =           Token,
-                                                       consumer_key =    ?SPOTMD_KEY,
-                                                       consumer_name =   "Spot.MD",
-                                                       first_name =      First,
-                                                       last_name =       Last,
-                                                       birthday  = Birth,
-                                                       gender = Gender,
-                                                       created_on =      support:now_for_timestamp(),
-                                                       unverified_phone_numbers = Phone_Numbers,
-                                                       unverified_email_addresses = Email_Addresses,
-                                                       time_to_live =    ?DEFAULT_TIME_TO_LIVE,
-                                                       account_id =      "0",
-                                                       hashed_password = sha2:hexdigest256(Password ++ "0"),
-                                                       delete_on_read =  ?DEFAULT_DELETE_ON_READ},
-                            account:set_account_details_on_create(Account_Details),
-                            account:auto_join_organizations(Account_Details),
-                            autocomplete:index_add(Token, account, ?SPOTMD_KEY),
-                            Response_Json = "{\"result\": {"
-                                "\"token\": \"" ++ Token ++ "\", "
-                                "\"resource\": \"" ++ Resource ++ "\", "
-                                "\"xmpp_password\": \"" ++ Xmpp_Password ++ "\"}}",
-                            ?TRACE_HTTP_RESPONSE(Token, Path, ?HTTP_CREATED, ?JSON_HDR, Response_Json),
-                            {?HTTP_CREATED, ?JSON_HDR, Response_Json}
-                    end
-```
 
 ### Strings
 
