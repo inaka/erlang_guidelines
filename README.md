@@ -261,20 +261,9 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Write function specs
 > Write the **-spec**'s for your public fun's, and for private fun's when it adds real value for documentation purposes. Define as many types as needed.
 
-```erlang
--type option_id():: atom().
--type option_count():: non_neg_integer().
--type option_percnt():: non_neg_integer().
--type option():: {option_id(), option_count()}.
--type result():: {option_id(), option_percnt()}.
+*Examples*: [specs](src/specs.erl)
 
--spec calc([option()]) -> [result()].
-calc(Options) ->
-  TotalCounts = [ X || {_,X} <- Options],
-  calc(Options, lists:sum(TotalCounts)).er
-```
-
-*Reasoning*: Dialyzer output is complicated as is, and is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
+*Reasoning*: Dialyzer output is complicated as is, and it is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
 
 ***
 ##### Avoid records in specs
