@@ -207,15 +207,11 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Don't use _Ignored variables
-> Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it. Say what you mean, mean what you say.
+> Variables beginning with _ are still variables, and are matched and bound, the _ just keeps the compiler from warning when you don't use them. If you add the _ to a variable's name, don't use it.
 
-```erlang
-% bad
-function(_Var) ->
-  …
-  other_function(_Var),
-  …
-```
+*Examples*: [ignored_vars](src/ignored_vars.erl)
+
+*Reasoning*: They are **not** supposed to be used.
 
 ***
 ##### Avoid boolean parameters
