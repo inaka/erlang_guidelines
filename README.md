@@ -345,7 +345,7 @@ Things that should be considered when writing code, but do not cause a PR reject
 
 ***
 ##### Keep functions small
-> Try to write functions with a small number of lines. **12** lines per function except for integration tests is a good measure.
+> Try to write functions with a small number of expressions. **12** expressions per function except for integration tests is a good measure.
 
 ***
 ##### Keep modules small
