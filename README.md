@@ -38,8 +38,8 @@ Table of Contents:
     * [Write function specs](#write-function-specs)
     * [Avoid records in specs](#avoid-records-in-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
-    * [Lock your dependencies](#lock-your-dependencies)
   * [Tools](#tools)
+    * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
@@ -281,11 +281,17 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Reasoning*: Avoid deprecated functionality
 
+### Tools
+
 ***
 ##### Lock your dependencies
 > In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
 
-### Tools
+*Examples*:
+- [erlang.mk](priv/Makefile) 
+- [rebar.config](priv/rebar.config)
+
+*Reasoning*: You don't want to be suddenly affected by a change in one of your dependencies. Once you've found the right version for you, stick to it until you *need* to change.
 
 ***
 ##### Loud errors
