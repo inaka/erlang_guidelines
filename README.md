@@ -38,6 +38,7 @@ Table of Contents:
     * [Write function specs](#write-function-specs)
     * [Avoid records in specs](#avoid-records-in-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
+    * [No nested header inclusion](#no-nested-header-inclusion)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -47,7 +48,6 @@ Table of Contents:
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
   * [Keep functions small](#keep-functions-small)
-  * [Control header inclusion](#control-header-inclusion)
   * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
 
@@ -277,6 +277,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Reasoning*: Avoid deprecated functionality
 
+***
+##### No nested header inclusion
+> When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
+
+*Examples*: [nested](include/nested.hrl)
+
+*Reasoning*: ``-include`` directives in included headers may lead to duplication of inclusions and/or other conflicts and it also hides things from the developer view.
+
 ### Tools
 
 ***
@@ -353,10 +361,6 @@ Things that should be considered when writing code, but do not cause a PR reject
   + clarity, it's easier to see what a function does when it's short and concise
   + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
-
-***
-##### Control header inclusion
-> When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
 
 ***
 ##### Use behaviours.
