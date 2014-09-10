@@ -339,21 +339,7 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### Comment levels
 > Module comments go with **%%%**, function comments with **%%**, and code comments with **%**.
 
-```erlang
-% bad
-% @doc My module
--module(my_module).
-
-% @doc My function
-my_function() -> ok. %% yeah! it returns ok
-
-% good
-%%% @doc My module
--module(my_module).
-
-%% @doc My function
-my_function() -> ok. % yeah! it returns ok
-```
+*Examples*: [comment_levels](src/comment_levels.erl)
 
 *Reasoning*: It clearly states what the comment is about, also helpful to search for specific comments, like "%% @".
 
