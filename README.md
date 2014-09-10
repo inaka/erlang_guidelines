@@ -347,6 +347,17 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### Keep functions small
 > Try to write functions with a small number of expressions. **12** expressions per function except for integration tests is a good measure.
 
+*Examples*: [small_funs](src/small_funs.erl)
+
+*Reasoning*: From 3 different sources:
+- Small functions aid readability and composeability. Readability aids maintainability. This cannot be stressed enough. The smaller your code, the easier it is to fix and change.
+- A small function allows one to see its purpose clearly, so that you need to only understand the small subset of operations it performs, which makes it very simple to verify it works correctly.
+- These are all compeling reasons:
+  + a function should do one thing, if it's too large you are likely to be doing work better suited for multiple functions
+  + clarity, it's easier to see what a function does when it's short and concise
+  + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
+  + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
+
 ***
 ##### Keep modules small
 > If a module is growing too much (because devs keep adding functionality to it), consider splitting it into several smaller modules that handle groups of related functionality
