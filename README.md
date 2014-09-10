@@ -38,8 +38,9 @@ Table of Contents:
     * [Write function specs](#write-function-specs)
     * [Avoid records in specs](#avoid-records-in-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
-    * [Lock your dependencies](#lock-your-dependencies)
+    * [No nested header inclusion](#no-nested-header-inclusion)
   * [Tools](#tools)
+    * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
@@ -47,12 +48,7 @@ Table of Contents:
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
   * [Keep functions small](#keep-functions-small)
-  * [Keep modules small](#keep-modules-small)
-  * [Honor KISS](#honor-kiss)
-  * [Help your tools help you](#help-your-tools-help-you)
-  * [Commits that remove code are beautiful](#commits-that-remove-code-are-beautiful)
-  * [Control header inclusion](#control-header-inclusion)
-  * [Use behaviours.](#use-behaviours)
+  * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
 
 ## Conventions & Rules
@@ -233,13 +229,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### IOLists over string concatenation
 > Use iolists instead of string concatenation whenever possible
 
-```erlang
-% bad
-"/users/" ++ UserId ++ "/events/" ++ EventsId
-
-% good
-["/users/", UserId, "/events/", EventsId]
-```
+*Examples*: [iolists](src/iolists.erl)
 
 *Reasoning*: Performance
 
@@ -249,33 +239,15 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ##### Uppercase macros
 > Macros should be named in ALL_UPPER_CASE:
 
-```erlang
-% bad
--define(?my_macro, '...').
--define(?MYMACRO, '...').
--define(?My_Macro, '...').
--define(?_mY_L33t_M@Cr0, '...').
+*Examples*: [macro_names](src/macro_names.erl)
 
-% good
--define(?MY_MACRO, '...').
--define(?YOUR_MACRO, '...').
-```
-
-*Reasoning*: It makes it easier not to duplicate macro names, to find them through grep, etc.
+*Reasoning*: It makes it easier not to duplicate macro names, to find them using grep, etc.
 
 ***
 ##### No module or function name macros
 > Don't use macros for module or function names
 
-```erlang
-% bad
-function() ->
-  ?SM:function(Args).
-
-% good
-function() ->
-  some_module:function(Args).
-```
+*Examples*: [macro_mod_names](src/macro_mod_names.erl)
 
 *Reasoning*: Copying lines of code to the console for debugging (something that happens *a lot*) becomes a really hard task if we need to manually replace all the macros.
 
@@ -285,57 +257,53 @@ function() ->
 ##### Write function specs
 > Write the **-spec**'s for your public fun's, and for private fun's when it adds real value for documentation purposes. Define as many types as needed.
 
-```erlang
--type option_id():: atom().
--type option_count():: non_neg_integer().
--type option_percnt():: non_neg_integer().
--type option():: {option_id(), option_count()}.
--type result():: {option_id(), option_percnt()}.
+*Examples*: [specs](src/specs.erl)
 
--spec calc([option()]) -> [result()].
-calc(Options) ->
-  TotalCounts = [ X || {_,X} <- Options],
-  calc(Options, lists:sum(TotalCounts)).er
-```
-
-*Reasoning*: Dialyzer output is complicated as is, and is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
+*Reasoning*: Dialyzer output is complicated as is, and it is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
 
 ***
 ##### Avoid records in specs
 > Avoid using records in your specs, use types.
 
-```erlang
-% bad
--record(state, {field1, field2}).
+*Examples*: [record_spec](src/record_spec.erl)
 
--spec function(#state{}) -> #state{}.
-function(State) ->
- % ... do something,
- NewState.
-
-% good
--record(state, {field1, field2}).
--type state() :: #state{}.
-
--spec function(state())) -> state()).
-function(State) ->
- % ... do something,
- NewState.
-```
+*Reasoning*: Types can be exported, which aids documentation and, using ``opaque`` types it also helps with encapsulation and abstraction.
 
 ***
 ##### Use -callback attributes over behaviour_info/1.
-> Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions. In general, avoid deprecated functionality.
+> Unless you know your project will be compiled with R14 or lower, use ``-callback`` instead of ``behavior_info/1`` for your behavior definitions.
+
+*Examples*: [callbacks](src/callbacks)
+
+*Reasoning*: Avoid deprecated functionality
+
+***
+##### No nested header inclusion
+> When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
+
+*Examples*: [nested](include/nested.hrl)
+
+*Reasoning*: ``-include`` directives in included headers may lead to duplication of inclusions and/or other conflicts and it also hides things from the developer view.
+
+### Tools
 
 ***
 ##### Lock your dependencies
 > In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
 
-### Tools
+*Examples*:
+- [erlang.mk](priv/Makefile) 
+- [rebar.config](priv/rebar.config)
+
+*Reasoning*: You don't want to be suddenly affected by a change in one of your dependencies. Once you've found the right version for you, stick to it until you *need* to change.
 
 ***
 ##### Loud errors
-> Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace so that somebody watching it can understand what's happening
+> Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace.
+
+*Examples*: [loud_errors](src/loud_errors.erl) 
+
+*Reasoning*: The idea is that somebody watching the logs has enough info to understand what's happening.
 
 ***
 ##### Properly use logging levels
@@ -348,8 +316,8 @@ function(State) ->
   * ``warning``: Handled errors, the system keeps working as usual, but something out of the ordinary happened
   * ``error``: Something bad and unexpected happen, usually an exception or error (**DO** log the **stack trace** here)
   * ``critical``: The system (or a part of it) crashed and somebody should be informed and take action about it
-  * ``alert``:
-  * ``emergency``:
+  * ``alert``: _There is no rule on when to use this level_
+  * ``emergency``: _There is no rule on when to use this level_
 
 ## Suggestions & Great Ideas
 
@@ -359,83 +327,56 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### CamelCase over Under_Score
 > Symbol naming: Use variables in CamelCase and atoms, function and module names with underscores.
 
-```erlang
-% bad
-Variable_Name = functionName(atomName).
+*Examples*: [camel_case](src/camel_case.erl)
 
-% good
-VariableName = function_name(atom_name).
-```
-
-*Reasoning*: It helps a lot with the next issue in this list
+*Reasoning*: It helps a lot with the next issue in this list ;)
 
 ***
 ##### Prefer shorter (but still meaningful) variable names
 > As long as it's easy to read and understand, keep variable names short
 
-```erlang
-% bad
-OrganizationToken, OID
+*Examples*: [var_names](src/var_names.erl)
 
-% good
-OrgID
-```
-
-*Reasoning*: It helps reducing line lengths, which is also described below
+*Reasoning*: It helps reducing line lengths, which is also described above
 
 ***
 ##### Comment levels
 > Module comments go with **%%%**, function comments with **%%**, and code comments with **%**.
 
-```erlang
-% bad
-% @doc My module
--module(my_module).
-
-% @doc My function
-my_function() -> ok. %% yeah! it returns ok
-
-% good
-%%% @doc My module
--module(my_module).
-
-%% @doc My function
-my_function() -> ok. % yeah! it returns ok
-```
+*Examples*: [comment_levels](src/comment_levels.erl)
 
 *Reasoning*: It clearly states what the comment is about, also helpful to search for specific comments, like "%% @".
 
 ***
 ##### Keep functions small
-> Try to write functions with a small number of lines. **12** lines per function except for integration tests is a good measure.
+> Try to write functions with a small number of expressions. **12** expressions per function except for integration tests is a good measure.
 
-***
-##### Keep modules small
-> If a module is growing too much (because devs keep adding functionality to it), consider splitting it into several smaller modules that handle groups of related functionality
+*Examples*: [small_funs](src/small_funs.erl)
 
-***
-##### Honor KISS
-> And don't over-engineer.
-
-***
-##### Help your tools help you
-> Help ``dialyzer`` and ``xref`` as much as you can, so that they can work for you
-
-***
-##### Commits that remove code are beautiful
-> Less is more. We value negative commits (those with more deletions than additions). Strive to attain the zen of the codeless code.
-
-***
-##### Control header inclusion
-> When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
+*Reasoning*: From 3 different sources:
+- Small functions aid readability and composeability. Readability aids maintainability. This cannot be stressed enough. The smaller your code, the easier it is to fix and change.
+- A small function allows one to see its purpose clearly, so that you need to only understand the small subset of operations it performs, which makes it very simple to verify it works correctly.
+- These are all compeling reasons:
+  + a function should do one thing, if it's too large you are likely to be doing work better suited for multiple functions
+  + clarity, it's easier to see what a function does when it's short and concise
+  + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
+  + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
 
 ***
 ##### Use behaviours.
 > Encapsulate reusable code in behaviors.
 
+*Examples*: [behavior](src/behavior.erl)
+
+*Reasoning*: It's the OTP way ;)
+
 ***
 ##### When programming defensively, do so on client side
-One aspect of choosing where want you to crash is how you design your API:
+Do validations on the outmost layers of your code.
+
+*Examples*: [validations](src/validations.erl)
+
+*Reasoning*: One aspect of choosing where want you to crash is how you design your API: A function that checks the input before calling the gen_server behind it will avoid a full roundtrip to the gen_server and maybe even a gen_server crash.
 do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
 If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
