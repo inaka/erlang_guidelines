@@ -359,10 +359,6 @@ Things that should be considered when writing code, but do not cause a PR reject
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
 
 ***
-##### Honor KISS
-> And don't over-engineer.
-
-***
 ##### Help your tools help you
 > Help ``dialyzer`` and ``xref`` as much as you can, so that they can work for you
 
