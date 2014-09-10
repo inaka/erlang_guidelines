@@ -323,15 +323,9 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### CamelCase over Under_Score
 > Symbol naming: Use variables in CamelCase and atoms, function and module names with underscores.
 
-```erlang
-% bad
-Variable_Name = functionName(atomName).
+*Examples*: [camel_case](src/camel_case.erl)
 
-% good
-VariableName = function_name(atom_name).
-```
-
-*Reasoning*: It helps a lot with the next issue in this list
+*Reasoning*: It helps a lot with the next issue in this list ;)
 
 ***
 ##### Prefer shorter (but still meaningful) variable names
