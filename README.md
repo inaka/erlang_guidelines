@@ -331,15 +331,9 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### Prefer shorter (but still meaningful) variable names
 > As long as it's easy to read and understand, keep variable names short
 
-```erlang
-% bad
-OrganizationToken, OID
+*Examples*: [var_names](src/var_names.erl)
 
-% good
-OrgID
-```
-
-*Reasoning*: It helps reducing line lengths, which is also described below
+*Reasoning*: It helps reducing line lengths, which is also described above
 
 ***
 ##### Comment levels
