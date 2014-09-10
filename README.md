@@ -110,7 +110,7 @@ Table of Contents:
 
 ***
 ##### Group functions logically
-> Try to always separate **PRIVATE** and **PUBLIC** functions in groups, with the public ones first, unless it helps readability and code discovery.
+> Try to always separate **unexported** and **exported** functions in groups, with the exported ones first, unless it helps readability and code discovery.
 
 *Examples*: [grouping_functions](src/grouping_functions)
 
@@ -255,7 +255,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Write function specs
-> Write the **-spec**'s for your public fun's, and for private fun's when it adds real value for documentation purposes. Define as many types as needed.
+> Write the **-spec**'s for your exported fun's, and for unexported fun's when it adds real value for documentation purposes. Define as many types as needed.
 
 *Examples*: [specs](src/specs.erl)
 
