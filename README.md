@@ -368,7 +368,11 @@ Things that should be considered when writing code, but do not cause a PR reject
 
 ***
 ##### When programming defensively, do so on client side
-One aspect of choosing where want you to crash is how you design your API:
+Do validations on the outmost layers of your code.
+
+*Examples*: [validations](src/validations.erl)
+
+*Reasoning*: One aspect of choosing where want you to crash is how you design your API: A function that checks the input before calling the gen_server behind it will avoid a full roundtrip to the gen_server and maybe even a gen_server crash.
 do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
 If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
