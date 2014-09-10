@@ -295,7 +295,11 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Loud errors
-> Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace so that somebody watching it can understand what's happening
+> Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace.
+
+*Examples*: [loud_errors](src/loud_errors.erl) 
+
+*Reasoning*: The idea is that somebody watching the logs has enough info to understand what's happening.
 
 ***
 ##### Properly use logging levels
