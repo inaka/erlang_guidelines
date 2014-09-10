@@ -312,8 +312,8 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
   * ``warning``: Handled errors, the system keeps working as usual, but something out of the ordinary happened
   * ``error``: Something bad and unexpected happen, usually an exception or error (**DO** log the **stack trace** here)
   * ``critical``: The system (or a part of it) crashed and somebody should be informed and take action about it
-  * ``alert``:
-  * ``emergency``:
+  * ``alert``: _There is no rule on when to use this level_
+  * ``emergency``: _There is no rule on when to use this level_
 
 ## Suggestions & Great Ideas
 
