@@ -359,10 +359,6 @@ Things that should be considered when writing code, but do not cause a PR reject
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
 
 ***
-##### Keep modules small
-> If a module is growing too much (because devs keep adding functionality to it), consider splitting it into several smaller modules that handle groups of related functionality
-
-***
 ##### Honor KISS
 > And don't over-engineer.
 
