@@ -47,12 +47,8 @@ Table of Contents:
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
   * [Keep functions small](#keep-functions-small)
-  * [Keep modules small](#keep-modules-small)
-  * [Honor KISS](#honor-kiss)
-  * [Help your tools help you](#help-your-tools-help-you)
-  * [Commits that remove code are beautiful](#commits-that-remove-code-are-beautiful)
   * [Control header inclusion](#control-header-inclusion)
-  * [Use behaviours.](#use-behaviours)
+  * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
 
 ## Conventions & Rules
@@ -357,14 +353,6 @@ Things that should be considered when writing code, but do not cause a PR reject
   + clarity, it's easier to see what a function does when it's short and concise
   + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
-
-***
-##### Help your tools help you
-> Help ``dialyzer`` and ``xref`` as much as you can, so that they can work for you
-
-***
-##### Commits that remove code are beautiful
-> Less is more. We value negative commits (those with more deletions than additions). Strive to attain the zen of the codeless code.
 
 ***
 ##### Control header inclusion
