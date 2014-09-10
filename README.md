@@ -366,6 +366,10 @@ Things that should be considered when writing code, but do not cause a PR reject
 ##### Use behaviours.
 > Encapsulate reusable code in behaviors.
 
+*Examples*: [behavior](src/behavior.erl)
+
+*Reasoning*: It's the OTP way ;)
+
 ***
 ##### When programming defensively, do so on client side
 Do validations on the outmost layers of your code.
