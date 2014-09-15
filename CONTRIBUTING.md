@@ -25,7 +25,7 @@ I swear I heard Joe mutter this while taking a nap at the office.
 
 One rule per issue.
 
-When discussed and approved, it will be moved to either the *Conventions* or the *Great Ideas* list. If rejected, it will be moved to the *Rejected* list.
+When discussed and approved, it will be moved to either the *Conventions* or the *Great Ideas* list. If rejected, it will be moved to the [*Rejected*](REJECTED.md) list.
 
 ### Acceptance criteria
 
