@@ -40,6 +40,7 @@ Table of Contents:
     * [Avoid records in specs](#avoid-records-in-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
     * [No nested header inclusion](#no-nested-header-inclusion)
+    * [No types in include files](#no-types-in-include-files)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -295,6 +296,17 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [nested](include/nested.hrl)
 
 *Reasoning*: ``-include`` directives in included headers may lead to duplication of inclusions and/or other conflicts and it also hides things from the developer view.
+
+***
+##### No types in include files
+> No `-type` in hrl files
+
+*Examples*: [types](src/types.erl)
+
+*Reasoning*: Defining types in public header files (especially those intended for inclusion via `-include_lib()`) might lead to type name clashes between projects and even modules of a single big project.
+Instead, types should be defined in modules which they correspond to (with `-export_type()`) and this way take advantage of the namespacing offered by module names.
+In other words, "no type definitions in header files" rule means that we will always need to use `some_mod:some_type()` unless referring to a type from the same module it's defined in.
+Following this rule you also get the benefits that `-opaque` types provide, for instance, to dialyzer.
 
 ### Tools
 
