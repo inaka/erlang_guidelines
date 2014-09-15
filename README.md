@@ -380,3 +380,11 @@ Do validations on the outmost layers of your code.
 do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
 If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
+
+***
+##### Move stuff to independent applications
+> When you identify a block of functionality that is self-contained (it may be several modules or just a big one) and actually independent of the main purpose of your application, place that in a separate application. And consider open-sourcing it.
+
+*Reasoning*: It's easier to share among apps. If open-sourced, you're sharing it with the community and you get the benefits of the community being involved in it.
+
+*Note*: Do **not** create highly specific libraries that are too coupled with the project you're working on. Use this rule for libraries that will likely be reused in other projects.
