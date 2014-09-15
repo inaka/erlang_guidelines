@@ -32,6 +32,7 @@ Table of Contents:
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
+    * [No Macros](#no-macros)
     * [Uppercase Macros](#uppercase-macros)
     * [No module or function name macros](#no-module-or-function-name-macros)
   * [Misc](#misc)
@@ -234,6 +235,16 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Reasoning*: Performance
 
 ### Macros
+
+***
+##### No Macros
+> Don't use macros, except for very specific cases, that include
+> * Predefined ones: ``?MODULE``, ``?MODULE_STRING`` and ``?LINE``
+> * Magic numbers: ``?DEFAULT_TIMEOUT``
+
+*Examples*: [macros](src/macros.erl)
+
+*Reasoning*: Macros make code harder to debug. If you're trying to use them to avoid repeating the same block of code over and over, you can use functions for that.
 
 ***
 ##### Uppercase macros
