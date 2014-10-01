@@ -55,6 +55,7 @@ Table of Contents:
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
 
 ## Contact Us
+
 For **questions** or **general comments** regarding the use of this library, please use our public
 [hipchat room](https://www.hipchat.com/gpBpW3SsT).
 
