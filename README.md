@@ -174,7 +174,7 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 
 *Examples*: [spaghetti](src/spaghetti.erl)
 
-*Reasoning*: Spaghetti code is harder to read, understand and edit.
+*Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
 
 ### Syntax
 
@@ -206,7 +206,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ***
 ##### Explicit state should be explicitly named
 > Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
- 
+
 *Examples*: [state](src/state)
 
 *Reasoning*: OTP behaviours implementations usually require a state, and if it always have the same name it makes it more clearly recognizable. Defining a type for it, helps _dialyzer_ detect leaks (where an internal type as the state is used outside of the module).
@@ -325,7 +325,7 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 > In your rebar.config or Erlang.mk, specify a tag or commit, but not master.
 
 *Examples*:
-- [erlang.mk](priv/Makefile) 
+- [erlang.mk](priv/Makefile)
 - [rebar.config](priv/rebar.config)
 
 *Reasoning*: You don't want to be suddenly affected by a change in one of your dependencies. Once you've found the right version for you, stick to it until you *need* to change.
@@ -334,7 +334,7 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 ##### Loud errors
 > Don't let errors and exceptions go unlogged. Even when you handle them, write a log line with the stack trace.
 
-*Examples*: [loud_errors](src/loud_errors.erl) 
+*Examples*: [loud_errors](src/loud_errors.erl)
 
 *Reasoning*: The idea is that somebody watching the logs has enough info to understand what's happening.
 
@@ -382,7 +382,7 @@ Things that should be considered when writing code, but do not cause a PR reject
 
 ***
 ##### Keep functions small
-> Try to write functions with a small number of expressions. **12** expressions per function except for integration tests is a good measure.
+> Try to write functions with a small number of expressions, and that do only one thing. **12** expressions per function except for integration tests is a good measure.
 
 *Examples*: [small_funs](src/small_funs.erl)
 
@@ -394,6 +394,35 @@ Things that should be considered when writing code, but do not cause a PR reject
   + clarity, it's easier to see what a function does when it's short and concise
   + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
+
+*Notes:*:
+
+This guideline, together with **[Avoid deep nesting](#avoid-deep-nesting)** and **[More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)**, can be well followed by structuring your functions as follows:
+
+```erlang
+some_fun(#state{name=foo} = State) ->
+  do_foo_thing(),
+  continue_some_fun(State);
+some_fun(#state{name=bar} = State) ->
+  do_bar_thing(),
+  continue_some_fun(State).
+
+continue_some_fun(State) ->
+  ...,
+  ok.
+
+```
+
+Remember:
+
+- There is no cost for a tail call like that.
+- This pattern is efficient, compact, clear.
+- It "resets" indentation so the code doesn't wander off the right edge of the screen.
+
+Most importantly:
+
+- It's easier to test because the functions delineate the testing hinge points.
+- It gives more surface for tracing, so one can get very specific about where the computation goes off the rails. Nested cases are opaque at runtime.
 
 ***
 ##### Use behaviours.
