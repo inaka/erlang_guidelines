@@ -395,7 +395,7 @@ Things that should be considered when writing code, but do not cause a PR reject
   + reuse, keeping them short means you can use them later for something else (specially true for Erlang)
   + screen size: you want to be able to see the whole function if you want to connect via ssh to a server for whatever reason
 
-*Notes:*:
+*Notes*:
 
 This guideline, together with **[Avoid deep nesting](#avoid-deep-nesting)** and **[More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)**, can be well followed by structuring your functions as follows:
 
