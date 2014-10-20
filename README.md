@@ -11,7 +11,7 @@ Table of Contents:
   * [Source Code Layout](#source-code-layout)
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
-    * [80-90 column per line](#80-90-column-per-line)
+    * [80 column per line](#80-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
@@ -86,8 +86,8 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 *Reasoning*: Again, easier to find / read / etc.
 
 ***
-##### 80-90 column per line
-> Stick to 80-90 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
+##### 80 column per line
+> Stick to 80 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
 
 *Examples*: [col_width](src/col_width.erl)
 
