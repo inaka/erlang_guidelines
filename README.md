@@ -22,6 +22,7 @@ Table of Contents:
     * [Avoid dynamic calls](#avoid-dynamic-calls)
     * [Group modules in subdirectories by functionality](#group-modules-in-subdirectories-by-functionality)
     * [Don't write spaghetti code](#dont-write-spaghetti-code)
+    * [No Trailing Whitespace](#no-trailing-whitespace)
   * [Syntax](#syntax)
     * [Avoid if expressions](#avoid-if-expressions)
   * [Naming](#naming)
@@ -175,6 +176,18 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 *Examples*: [spaghetti](src/spaghetti.erl)
 
 *Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
+
+### Syntax
+
+Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
+
+***
+##### No Trailing Whitespace
+> Remove trailing whitespaces from your lines
+
+*Examples*: [trailing_whitespace](src/trailing_whitespace.erl)
+
+*Reasoning*: It's commit noise. Also [this long argument](https://programmers.stackexchange.com/questions/121555/why-is-trailing-whitespace-a-big-deal).
 
 ### Syntax
 
