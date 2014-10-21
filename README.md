@@ -11,6 +11,7 @@ Table of Contents:
   * [Source Code Layout](#source-code-layout)
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
+    * [No Trailing Whitespace](#no-trailing-whitespace)
     * [80 column per line](#80-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
@@ -84,6 +85,18 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 *Examples*: [spaces](src/spaces.erl)
 
 *Reasoning*: Again, easier to find / read / etc.
+
+***
+##### No Trailing Whitespace
+> Remove trailing whitespaces from your lines
+
+*Examples*: [trailing_whitespace](src/trailing_whitespace.erl)
+
+*Reasoning*: It's commit noise. Also [this long argument](https://programmers.stackexchange.com/questions/121555/why-is-trailing-whitespace-a-big-deal).
+
+### Syntax
+
+Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
 
 ***
 ##### 80 column per line
