@@ -213,7 +213,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Examples*: [nested_try_catch](src/nested_try_catch.erl)
 
-*Reasoning*: Nesting `try…catch` blocks defeats the whole purpose of them, which is to isolate the code that deals with error scenarios from the nice and shinny code that deals with the expected execution path.
+*Reasoning*: Nesting `try…catch` blocks defeats the whole purpose of them, which is to isolate the code that deals with error scenarios from the nice and shiny code that deals with the expected execution path.
 
 ### Naming
 
