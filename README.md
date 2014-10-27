@@ -25,6 +25,7 @@ Table of Contents:
     * [Don't write spaghetti code](#dont-write-spaghetti-code)
   * [Syntax](#syntax)
     * [Avoid if expressions](#avoid-if-expressions)
+    * [Avoid nested try...catches](#avoid-nested-try-catches)
   * [Naming](#naming)
     * [Be consistent when naming](#be-consistent-when-naming-concepts)
     * [Explicit state should be explicitly named](#explicit-state-should-be-explicitly-named)
@@ -205,6 +206,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 - [From OOP world](http://antiifcampaign.com/)
 - [In this repo](issues/14)
 - [In erlang-questions](http://erlang.org/pipermail/erlang-questions/2014-September/080827.html)
+
+***
+##### Avoid nested try...catches
+> Don't nest `try…catch` clauses
+
+*Examples*: [nested_try_catch](src/nested_try_catch.erl)
+
+*Reasoning*: Nesting `try…catch` blocks defeats the whole purpose of them, which is to isolate the code that deals with error scenarios from the nice and shiny code that deals with the expected execution path.
 
 ### Naming
 
