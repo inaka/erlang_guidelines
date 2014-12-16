@@ -39,9 +39,14 @@ Table of Contents:
     * [No Macros](#no-macros)
     * [Uppercase Macros](#uppercase-macros)
     * [No module or function name macros](#no-module-or-function-name-macros)
+  + [Records](#records)
+    * [Record names](#record-names)
+    * [Records go first](#records-go-first)
+    * [Don't share your records](#dont-share-your-records)
+    * [Avoid records in specs](#avoid-records-in-specs)
+    * [Types in records](#types-in-records)
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
-    * [Avoid records in specs](#avoid-records-in-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
     * [No nested header inclusion](#no-nested-header-inclusion)
     * [No types in include files](#no-types-in-include-files)
@@ -304,6 +309,48 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Reasoning*: Copying lines of code to the console for debugging (something that happens *a lot*) becomes a really hard task if we need to manually replace all the macros.
 
+### Records
+
+***
+##### Record names
+> Record names must use only lowercase characters. Words in record names must be separated with `_`. Same rule applies to record field names
+
+*Examples*: [record_names](src/record_names.erl)
+
+*Reasoning*: Record and field names are atoms, they should follow the same rules that apply to them.
+
+***
+##### Records go first
+> Records that are used within a module should be defined before any function bodies.
+
+*Examples*: [record_placement](src/record_placement.erl)
+
+*Reasoning*: Records are used to define data types that will most likely be used by multiple functions on the module, so their definition can not be tied to just one. Also, since records will be associated to types, it's a good practice to place them in code in a similar way as the documentation does (and edoc puts types at the beginning of each module documentation)
+
+***
+##### Don't share your records
+> Records should not be shared among multiple modules. If you need to share _objects_ that are represented as records, use opaque exported types and provide adequate accesor functions in your module.
+
+*Examples*: [record_sharing](src/record_sharing.erl)
+
+*Reasoning*: Records are used for data structure definitions. Hiding those structures aids encapsulation and abstraction. If a record structure needs to be changed and it's definition is written in a .hrl file, the developer should find all the files where that .hrl and verify that his change hasn't broken anything. That's not needed if the record structure is internal to the module that manages it.
+
+***
+##### Avoid records in specs
+> Avoid using records in your specs, use types.
+
+*Examples*: [record_spec](src/record_spec.erl)
+
+*Reasoning*: Types can be exported, which aids documentation and, using ``opaque`` types it also helps with encapsulation and abstraction.
+
+***
+#####  Types in records
+> Always add type definitions to your record fields
+
+*Examples*: [record_types](src/record_types.erl)
+
+*Reasoning*: Records define data structures, and one of the most important parts of that definition is the type of the constituent pieces.
+
 ### Misc
 
 ***
@@ -313,14 +360,6 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [specs](src/specs.erl)
 
 *Reasoning*: Dialyzer output is complicated as is, and it is improved with good type names. In general, having semantically loaded type names for arguments makes reasoning about possible type failures easier, as well as the function's purpose.
-
-***
-##### Avoid records in specs
-> Avoid using records in your specs, use types.
-
-*Examples*: [record_spec](src/record_spec.erl)
-
-*Reasoning*: Types can be exported, which aids documentation and, using ``opaque`` types it also helps with encapsulation and abstraction.
 
 ***
 ##### Use -callback attributes over behaviour_info/1.
