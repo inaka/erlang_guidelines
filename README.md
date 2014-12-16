@@ -32,6 +32,7 @@ Table of Contents:
     * [Don't use _Ignored variables](#dont-use-_ignored-variables)
     * [Avoid boolean parameters](#avoid-boolean-parameters)
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
+    * [Lowercase atoms](#lowercase-atoms)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -256,6 +257,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [naming_modules](src/naming_modules)
 
 *Reasoning*: It gives coherence to your system.
+
+***
+##### Lowercase atoms
+> Atoms should use only lowercase characters. Words in atom names should be separated with `_`. Special cases are allowed (like `'GET'`, `'POST'`, etc.) but should be properly justified.
+
+*Examples*: [atoms](src/atoms.erl)
+
+*Reasoning*: Adhering one convention makes it easier not to have "duplicated" atoms all around the code. Also, not using caps or special characters reduces the need for `'` around atoms.
 
 ### Strings
 
