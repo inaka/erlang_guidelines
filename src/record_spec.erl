@@ -1,6 +1,6 @@
 -module(record_spec).
 
--record(state, {field1, field2}).
+-record(state, {field1:: any(), field2:: any()}).
 
 -opaque state() :: #state{}.
 

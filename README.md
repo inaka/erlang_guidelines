@@ -43,6 +43,7 @@ Table of Contents:
     * [Records go first](#records-go-first)
     * [Don't share your records](#dont-share-your-records)
     * [Avoid records in specs](#avoid-records-in-specs)
+    * [Types in records](#types-in-records)
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
@@ -332,6 +333,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [record_spec](src/record_spec.erl)
 
 *Reasoning*: Types can be exported, which aids documentation and, using ``opaque`` types it also helps with encapsulation and abstraction.
+
+***
+#####  Types in records
+> Always add type definitions to your record fields
+
+*Examples*: [record_types](src/record_types.erl)
+
+*Reasoning*: Records define data structures, and one of the most important parts of that definition is the type of the constituent pieces.
 
 ### Misc
 

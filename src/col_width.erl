@@ -1,6 +1,6 @@
 -module(col_width).
 
--record(rec, {field1, field2, field3}).
+-record(rec, {field1 :: any(), field2 :: any(), field3 :: any()}).
 
 -export([bad/2, good/2]).
 
