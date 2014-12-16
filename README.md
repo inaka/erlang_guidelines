@@ -35,6 +35,7 @@ Table of Contents:
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
     * [Lowercase atoms](#lowercase-atoms)
     * [Function Names](#function-names)
+    * [Variable Names](#variable-names)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -293,6 +294,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [function_names](src/function_names.erl)
 
 *Reasoning*: Function names are atoms, they should follow the same rules that apply to them.
+
+***
+##### Variable Names
+> CamelCase must be used for variables. Don’t separate words in variables with `_`.
+
+*Examples*: [variable_names](src/variable_names.erl)
+
+*Reasoning*: Adhering one convention makes it easier not to have "duplicated" variables all around the code. Since variables start with upper case, camel-case looks like a proper convention for their naming.
 
 ### Strings
 
