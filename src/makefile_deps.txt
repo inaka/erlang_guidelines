@@ -1,8 +1,0 @@
-```makefile
-PROJECT = myproject
-
-DEPS = cowboy lager jiffy
-dep_lager = git git://github.com/basho/lager.git master
-dep_jiffy = git git://github.com/davisp/jiffy.git master
-
-```
