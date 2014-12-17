@@ -426,7 +426,7 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 ##### Prefer the git protocol over others when specifying dependency URLs
 > When specifying dependencies in erlang.mk Makefils or rebar.config, prefer using the git protocol to download the dependency repository.
 
-*Examples*: [makefile example](src/dependency_protocol/dep_protocol.makefile) [rebar example](src/dependency_protocols/dep_protocol.config)
+*Examples*: [makefile example](src/dependency_protocol/dep_protocol.makefile) [rebar example](src/dependency_protocol/dep_protocol.config)
 
 *Reasoning*: SSH requires authentication.
 https may require authentication (bitbucket does, github doesn't), but sometimes doesn't.
