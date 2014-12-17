@@ -424,24 +424,11 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
   * ``emergency``: _There is no rule on when to use this level_
 
 ##### Prefer the git protocol over others when specifying dependency URLs
-> When specifying dependencies 
+> When specifying dependencies in erlang.mk Makefils or rebar.config, prefer using the git protocol to download the dependency repository.
 
-```erlang
-%% bad
-{deps,
-  [{lager, "2.*", {git, "git@github.com:basho/lager.git", "2.0.0"}},
-  {jiffy,   "0.*", {git, "https://github.com:davisp/jiffy.git", "0.11.3"}}
-}.
+*Examples*: [makefile_deps](src/makefile_deps) [src/rebar_deps.config]
 
-%% good
-{deps,
-  {lager, "2.*", {git, "git://github.com/basho/lager.git", "2.0.0"}},
-  {jiffy,   "0.*", {git, "git://github.com:davisp/jiffy.git", "0.11.3"}}
-}.
-```
-
-##### Reasoning
-SSH requires authentication.
+*Reasoning*: SSH requires authentication.
 https may require authentication (bitbucket does, github doesn't), but sometimes doesn't.
 In addition, https is chatty compared to the git protocol, optimized for cloning repos.
 The git protocol's main disadvantage is that it doesn't support authentication, which is a plus for CI systems.
