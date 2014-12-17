@@ -54,6 +54,7 @@ Table of Contents:
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
+    * [Prefer the git protocol when specifying dependency locations]()
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
@@ -421,6 +422,31 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
   * ``critical``: The system (or a part of it) crashed and somebody should be informed and take action about it
   * ``alert``: _There is no rule on when to use this level_
   * ``emergency``: _There is no rule on when to use this level_
+
+##### Prefer the git protocol over others when specifying dependency URLs
+> When specifying dependencies 
+
+```erlang
+%% bad
+{deps,
+  [{lager, "2.*", {git, "git@github.com:basho/lager.git", "2.0.0"}},
+  {jiffy,   "0.*", {git, "https://github.com:davisp/jiffy.git", "0.11.3"}}
+}.
+
+%% good
+{deps,
+  {lager, "2.*", {git, "git://github.com/basho/lager.git", "2.0.0"}},
+  {jiffy,   "0.*", {git, "git://github.com:davisp/jiffy.git", "0.11.3"}}
+}.
+```
+
+##### Reasoning
+SSH requires authentication.
+https may require authentication (bitbucket does, github doesn't), but sometimes doesn't.
+In addition, https is chatty compared to the git protocol, optimized for cloning repos.
+The git protocol's main disadvantage is that it doesn't support authentication, which is a plus for CI systems.
+
+* [Git on the Server - The Protocols](http://git-scm.com/book/ch4-1.html)
 
 ## Suggestions & Great Ideas
 
