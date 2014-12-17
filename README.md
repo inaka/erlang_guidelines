@@ -54,7 +54,7 @@ Table of Contents:
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
-    * [Prefer the git protocol when specifying dependency locations]()
+    * [Prefer the git protocol when specifying dependency locations](#prefer-the-git-protocol-over-others-when-specifying-dependency-urls)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
