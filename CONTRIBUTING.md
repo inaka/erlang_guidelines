@@ -5,8 +5,8 @@ If you feel this erlang coding standard could benefit from a new rule, or some o
 Suggestions should be added as Github issues whose title begins with "Suggestion:", with the following format:
 
 ***
-##### rule
-> Do NOT do this!
+##### a short description of what ()not) to do
+> Do NOT do this! Do this instead.
 
 ```erlang
 %% bad
@@ -18,8 +18,7 @@ beautiful_erlang_code() ->
   much_better.
 ```
 
-##### reasoning
-I swear I heard Joe mutter this while taking a nap at the office.
+*Reasoning*: I swear I heard Joe mutter this while taking a nap at the office.
 
 ***
 
