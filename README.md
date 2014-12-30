@@ -69,6 +69,7 @@ Table of Contents:
   * [Avoid unnecesary calls to length/1](#avoid-unnecesary-calls-to-length1)
   * [Move stuff to independent applications](#move-stuff-to-independent-applications)
   * [Use the facade pattern on libraries](#use-the-facade-pattern-on-libraries)
+  * [Types in exported functions](#types-in-exported-functions)
 
 ## Contact Us
 
@@ -589,3 +590,11 @@ If you don't tighten up the function head, the gen_server will crash.
 
 *Reasoning*: Having the relevant functions in a single module means that the end user doesn't have a hard time figuring out which functions to call. Note that to avoid making it too complex, you probably want to carefully consider which functionality you wish to support here; exposing fewer functions (the ones that show the basic use of the library) as opposed to just creating a dummy module containing every single exported function in the library is prefered.
 This greatly reduces the learning curve of the library and therefore makes it more tempting to use.
+
+***
+##### Types in exported functions
+> Custom data types used in exported functions should be defined with Erlang type declarations and exported from the module
+
+*Examples*: [data_types](src/data_types.erl)
+
+*Reasoning*: It helps with function documentation and, when using opaque types, we ensure encapsulation.
