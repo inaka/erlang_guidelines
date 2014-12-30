@@ -285,7 +285,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Examples*: [atoms](src/atoms.erl)
 
-*Reasoning*: Adhering one convention makes it easier not to have "duplicated" atoms all around the code. Also, not using caps or special characters reduces the need for `'` around atoms.
+*Reasoning*: Adhering to one convention makes it easier not to have "duplicated" atoms all around the code. Also, not using caps or special characters reduces the need for `'` around atoms.
 
 ***
 ##### Function Names
@@ -301,7 +301,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Examples*: [variable_names](src/variable_names.erl)
 
-*Reasoning*: Adhering one convention makes it easier not to have "duplicated" variables all around the code. Since variables start with upper case, camel-case looks like a proper convention for their naming.
+*Reasoning*: Adhering to one convention makes it easier not to have "duplicated" variables all around the code. Since variables start with upper case, camel-case looks like a proper convention for their naming.
 
 ### Strings
 
