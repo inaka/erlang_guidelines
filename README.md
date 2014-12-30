@@ -33,6 +33,7 @@ Table of Contents:
     * [Avoid boolean parameters](#avoid-boolean-parameters)
     * [Stick to one convention for naming modules](#stick-to-one-convention-for-naming-modules)
     * [Lowercase atoms](#lowercase-atoms)
+    * [Function Names](#function-names)
   * [Strings](#strings)
     * [IOLists over string concatenation](#iolists-over-string-concatenation)
   * [Macros](#macros)
@@ -274,6 +275,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [atoms](src/atoms.erl)
 
 *Reasoning*: Adhering one convention makes it easier not to have "duplicated" atoms all around the code. Also, not using caps or special characters reduces the need for `'` around atoms.
+
+***
+##### Function Names
+> Function names must use only lowercase characters. Words in function names must be separated with `_`.
+
+*Examples*: [function_names](src/function_names.erl)
+
+*Reasoning*: Function names are atoms, they should follow the same rules that apply to them.
 
 ### Strings
 
