@@ -63,6 +63,7 @@ Table of Contents:
   * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
   * [Avoid unnecesary calls to length/1](#avoid-unnecesary-calls-to-length1)
+  * [Move stuff to independent applications](#move-stuff-to-independent-applications)
 
 ## Contact Us
 
