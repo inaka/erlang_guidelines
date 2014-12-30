@@ -51,6 +51,7 @@ Table of Contents:
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
     * [No nested header inclusion](#no-nested-header-inclusion)
     * [No types in include files](#no-types-in-include-files)
+    * [Don't import](#dont-import)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -400,6 +401,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 Instead, types should be defined in modules which they correspond to (with `-export_type()`) and this way take advantage of the namespacing offered by module names.
 In other words, "no type definitions in header files" rule means that we will always need to use `some_mod:some_type()` unless referring to a type from the same module it's defined in.
 Following this rule you also get the benefits that `-opaque` types provide, for instance, to dialyzer.
+
+***
+##### Don't import
+> Do not use the `-import` directive
+
+*Examples*: [import](src/import.erl)
+
+*Reasoning*: Importing functions from other modules makes the code harder to read and debug since you cannot directly distinguish local from external functions. In appropriately named functions, the module is _part_ of the function name, it gives meaning to it.
 
 ### Tools
 
