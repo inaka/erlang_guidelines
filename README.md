@@ -62,6 +62,7 @@ Table of Contents:
   * [Keep functions small](#keep-functions-small)
   * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
+  * [Avoid unnecesary calls to length/1](#avoid-unnecesary-calls-to-length1)
 
 ## Contact Us
 
@@ -525,6 +526,12 @@ Do validations on the outmost layers of your code.
 do_it(Pid, X) when is_integer(X) -> gen_server:call(Pid, {do_it, X}).
 If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
+
+***
+##### Avoid unnecesary calls to length/1
+Lots of use cases of length/1 can be replaced by pattern matching, this is specially true when checking if the list has at least one element.
+
+*Examples*: [pattern matching](src/pattern_matching.erl)
 
 ***
 ##### Move stuff to independent applications
