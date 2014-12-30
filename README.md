@@ -64,6 +64,7 @@ Table of Contents:
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
   * [Avoid unnecesary calls to length/1](#avoid-unnecesary-calls-to-length1)
   * [Move stuff to independent applications](#move-stuff-to-independent-applications)
+  * [Use the facade pattern on libraries](#use-the-facade-pattern-on-libraries)
 
 ## Contact Us
 
@@ -530,7 +531,7 @@ If you don't tighten up the function head, the gen_server will crash.
 
 ***
 ##### Avoid unnecesary calls to length/1
-Lots of use cases of length/1 can be replaced by pattern matching, this is specially true when checking if the list has at least one element.
+> Lots of use cases of length/1 can be replaced by pattern matching, this is specially true when checking if the list has at least one element.
 
 *Examples*: [pattern matching](src/pattern_matching.erl)
 
@@ -543,3 +544,12 @@ Lots of use cases of length/1 can be replaced by pattern matching, this is speci
 *Reasoning*: It's easier to share among apps. If open-sourced, you're sharing it with the community and you get the benefits of the community being involved in it.
 
 *Note*: Do **not** create highly specific libraries that are too coupled with the project you're working on. Use this rule for libraries that will likely be reused in other projects.
+
+***
+##### Use the facade pattern on libraries
+> [The facade pattern](http://en.wikipedia.org/wiki/Facade_pattern) is great to simplify library usage and serves as a form of self-documentation.
+
+*Examples*: [kafkerl](https://github.com/inaka/kafkerl/blob/master/src/kafkerl.erl)
+
+*Reasoning*: Having the relevant functions in a single module means that the end user doesn't have a hard time figuring out which functions to call. Note that to avoid making it too complex, you probably want to carefully consider which functionality you wish to support here; exposing fewer functions (the ones that show the basic use of the library) as opposed to just creating a dummy module containing every single exported function in the library is prefered.
+This greatly reduces the learning curve of the library and therefore makes it more tempting to use.
