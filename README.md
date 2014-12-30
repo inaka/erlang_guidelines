@@ -534,6 +534,8 @@ Lots of use cases of length/1 can be replaced by pattern matching, this is speci
 
 *Examples*: [pattern matching](src/pattern_matching.erl)
 
+*Reasoning*: Pattern matching is one of the core aspects of Erlang and as such it's both performant and readable. Pattern matching is also more flexible so changes to the logic get simpler.
+
 ***
 ##### Move stuff to independent applications
 > When you identify a block of functionality that is self-contained (it may be several modules or just a big one) and actually independent of the main purpose of your application, place that in a separate application. And consider open-sourcing it.
