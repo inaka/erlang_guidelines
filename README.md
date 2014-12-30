@@ -17,6 +17,7 @@ Table of Contents:
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
     * [Group functions logically](#group-functions-logically)
+    * [Get your types together](#get-your-types-together)
     * [No God modules](#no-god-modules)
     * [Simple unit tests](#simple-unit-tests)
     * [Honor DRY](#honor-dry)
@@ -153,6 +154,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [grouping_functions](src/grouping_functions)
 
 *Reasoning*: Well structured code is easier to read/understand/modify.
+
+***
+##### Get your types together
+> Place all types at the beginning of the file
+
+*Examples*: [type_placement](src/type_placement.erl)
+
+*Reasoning*: Types are used to define data structures that will most likely be used by multiple functions on the module, so their definition can not be tied to just one of them. Besides it's a good practice to place them in code in a similar way as the documentation presents them and edoc puts types at the beginning of each module documentation
 
 ***
 ##### No God modules
