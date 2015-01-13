@@ -602,7 +602,9 @@ This greatly reduces the learning curve of the library and therefore makes it mo
 
 ***
 ##### Separate responsibilities in sumo_db
-> When using sumo_db you should separate the responsibilities clearly, creating for each entity.
+> When using sumo_db you should separate the responsibilities clearly, creating for each entity:
+> - one module (usually called MODELs) to describe the entity and allow administrating instances of the model in memory
+> - one module (usually called MODEL_repo) to handle the various operations that require business logic relating to the entity
 
 *Examples*: [separate responsibilities in sumo_db](https://github.com/inaka/fiar/tree/master/src/models)
 
