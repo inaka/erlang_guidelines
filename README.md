@@ -70,6 +70,7 @@ Table of Contents:
   * [Move stuff to independent applications](#move-stuff-to-independent-applications)
   * [Use the facade pattern on libraries](#use-the-facade-pattern-on-libraries)
   * [Types in exported functions](#types-in-exported-functions)
+  * [Separate responsibilities in sumo_db](#separate-responsibilities-in-sumo_db)
 
 ## Contact Us
 
@@ -598,3 +599,11 @@ This greatly reduces the learning curve of the library and therefore makes it mo
 *Examples*: [data_types](src/data_types.erl)
 
 *Reasoning*: It helps with function documentation and, when using opaque types, we ensure encapsulation.
+
+***
+##### Separate responsibilities in sumo_db
+> When using sumo_db you should separate the responsibilities clearly, creating for each entity.
+
+*Examples*: [separate responsibilities in sumo_db](https://github.com/inaka/fiar/tree/master/src/models)
+
+*Reasoning*: By dividing the functions into two different modules we increase understandability of the functionality especially if these are called from external modules. It also allows us to better organize the code and have smaller modules.
