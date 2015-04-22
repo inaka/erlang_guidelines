@@ -204,7 +204,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Reasoning*: That way it's easier to find what you need and determine what a certain module does.
 
-*Note*: Remember to properly configure your ``Emakefile`` and ``rebar.config`` to handle that
+*Note*: Remember to properly configure your ``Emakefile`` to handle that, if you use it.
 
 ***
 ##### Don't write spaghetti code
