@@ -58,7 +58,7 @@ Table of Contents:
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
-    * [Prefer the git protocol when specifying dependency locations](#prefer-the-git-protocol-over-others-when-specifying-dependency-urls)
+    * [Prefer the https protocol when specifying dependency locations](#prefer-the-https-protocol-over-others-when-specifying-dependency-urls)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
@@ -464,17 +464,16 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
   * ``alert``: _There is no rule on when to use this level_
   * ``emergency``: _There is no rule on when to use this level_
 
-##### Prefer the git protocol over others when specifying dependency URLs
-> When specifying dependencies in erlang.mk Makefils or rebar.config, prefer using the git protocol to download the dependency repository.
+##### Prefer the https protocol over others when specifying dependency URLs
+> When specifying dependencies in erlang.mk Makefiles or rebar.config, prefer using the https protocol to download the dependency repository.
 
 *Examples*: [makefile example](src/dependency_protocol/dep_protocol.makefile) [rebar example](src/dependency_protocol/dep_protocol.config)
 
-*Reasoning*: SSH requires authentication.
-https may require authentication (bitbucket does, github doesn't), but sometimes doesn't.
-In addition, https is chatty compared to the git protocol, optimized for cloning repos.
-The git protocol's main disadvantage is that it doesn't support authentication, which is a plus for CI systems.
+*Reasoning*: HTTPS is recommended by GitHub and is easier for CI.
 
 * [Git on the Server - The Protocols](http://git-scm.com/book/ch4-1.html)
+* [GitHub Official Recommendation](https://help.github.com/articles/which-remote-url-should-i-use/)
+* [GitHub Protocol Comparison](https://gist.github.com/grawity/4392747#file-github-protocol-comparison-md)
 
 ## Suggestions & Great Ideas
 
