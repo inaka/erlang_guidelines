@@ -291,7 +291,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Function Names
-> Function names must use only lowercase characters. Words in function names must be separated with `_`.
+> Function names must use only lowercase characters or digits. Words in function names must be separated with `_`.
 
 *Examples*: [function_names](src/function_names.erl)
 
