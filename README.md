@@ -430,6 +430,13 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 
 *Reasoning*: Importing functions from other modules makes the code harder to read and debug since you cannot directly distinguish local from external functions. In appropriately named functions, the module is _part_ of the function name, it gives meaning to it.
 
+##### Don't export_all
+> Do not use the `-compile(export_all)` directive
+
+*Examples*: [export_all](src/export_all.erl)
+
+*Reasoning*: It's generally considered best to only export the specific functions that make up your module's known and documented external API. Keeping this list of functions small and consistent encourages good encapsulation and allows for more aggressive refactoring and internal improvements without altering the experience for those who make use of your module.
+
 ### Tools
 
 ***
