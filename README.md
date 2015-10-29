@@ -54,6 +54,7 @@ Table of Contents:
     * [No nested header inclusion](#no-nested-header-inclusion)
     * [No types in include files](#no-types-in-include-files)
     * [Don't import](#dont-import)
+    * [Don't export_all](#dont-export_all)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
