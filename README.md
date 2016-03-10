@@ -327,6 +327,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 *Examples*: [macros](src/macros.erl)
 
 *Reasoning*: Macros make code harder to debug. If you're trying to use them to avoid repeating the same block of code over and over, you can use functions for that.
+See [related blog post](https://medium.com/@erszcz/when-not-to-use-macros-in-erlang-1d3f10d377f#.xc9b4bsl9) by [@erszcz](https://github.com/erszcz).
 
 ***
 ##### Uppercase macros
