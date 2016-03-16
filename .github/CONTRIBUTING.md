@@ -5,7 +5,7 @@ If you feel this erlang coding standard could benefit from a new rule, or some o
 Suggestions should be added as Github issues whose title begins with "Suggestion:", with the following format:
 
 ***
-##### a short description of what ()not) to do
+##### a short description of what to do or what to avoid doing
 > Do NOT do this! Do this instead.
 
 ```erlang
