@@ -55,6 +55,7 @@ Table of Contents:
     * [No types in include files](#no-types-in-include-files)
     * [Don't import](#dont-import)
     * [Don't export_all](#dont-export_all)
+    * [No debug calls](#no-debug-calls)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -439,6 +440,14 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 *Examples*: [export_all](src/export_all.erl)
 
 *Reasoning*: It's generally considered best to only export the specific functions that make up your module's known and documented external API. Keeping this list of functions small and consistent encourages good encapsulation and allows for more aggressive refactoring and internal improvements without altering the experience for those who make use of your module.
+
+***
+##### No debug calls
+> Unless your project is meant to be run as an escript, there should be no `io:format` nor `ct:pal` calls in your production code (i.e. in the modules inside the `src` folder). Same rule applies for `lager` or `error_logger` calls if they're used just for debugging purposes during test stages.
+
+*Examples*: [debug_calls](src/debug_calls.erl)
+
+*Reasoning*: Leaving unnecessary logs on production code impacts performance. It increases the processing time for the functions you're debugging and also consumes disk space if the logs are written to a file (as they usually are). Besides, more often than not the log messages are only understood in the context of the test or debugging round in which they were created, therefore the become useless pretty fast.
 
 ### Tools
 
