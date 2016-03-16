@@ -5,10 +5,10 @@
 -spec bad(any()) -> any().
 bad(Input) ->
   io:format("About to do something with ~p~n", [Input]),
-  R = do:something(Input),
+  R = god:create_user(Input),
   ct:pal("The result was ~p", [R]),
   R.
 
 -spec good(any()) -> any().
 good(Input) ->
-  do:something(Input).
+  god:create_user(Input).
