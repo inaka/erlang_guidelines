@@ -136,11 +136,12 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ***
 
 ##### Avoid deep nesting
-> Try not to nest more than 3 levels deep.
+> Try not to nest more than 1 level deep.
 
 *Examples*: [nesting](src/nesting.erl)
 
 *Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
+See also: [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions).
 
 ***
 ##### More, smaller functions over case expressions
