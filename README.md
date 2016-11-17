@@ -56,6 +56,7 @@ Table of Contents:
     * [Don't import](#dont-import)
     * [Don't export_all](#dont-export_all)
     * [No debug calls](#no-debug-calls)
+    * [Don't use case catch](#dont-use-case-catch)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -448,6 +449,17 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 *Examples*: [debug_calls](src/debug_calls.erl)
 
 *Reasoning*: Leaving unnecessary logs on production code impacts performance. It increases the processing time for the functions you're debugging and also consumes disk space if the logs are written to a file (as they usually are). Besides, more often than not the log messages are only understood in the context of the test or debugging round in which they were created, therefore the become useless pretty fast.
+
+***
+##### Don't Use Case Catch
+> Don't capture errors with `case catch`, use `try ... of ... catch` instead.
+
+*Examples*: [case-catch](src/case_catch.erl)
+
+*Reasoning*: `case catch ...` mixes good results with errors which is confusing. By
+using `try ... of ... catch` the golden path is kept separate from the error
+handling. 
+
 
 ### Tools
 
