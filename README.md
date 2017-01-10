@@ -51,6 +51,7 @@ Table of Contents:
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
+    * [Use atoms or tagged tuples for messages](#use-atoms-or-tagged-tuples-for-messages)
     * [No nested header inclusion](#no-nested-header-inclusion)
     * [No types in include files](#no-types-in-include-files)
     * [Don't import](#dont-import)
@@ -407,6 +408,16 @@ See [related blog post](https://medium.com/@erszcz/when-not-to-use-macros-in-erl
 *Examples*: [callbacks](src/callbacks)
 
 *Reasoning*: Avoid deprecated functionality
+
+***
+##### Use atoms or tagged tuples for messages
+> When sending a message between processes, you should typically either send a single, human-readable atom, or a tuple with a human-readable atom placed in element 1. This includes messages being sent via ``gen_server:call`` and the like.
+
+*Examples*: [message-formatting](src/message_formatting.erl)
+
+*Reasoning*: Tagging messages with a distinctive, human-readable atom helps clarify the purpose of a message for anyone reading or debugging the code. Using element 1 of the tuple makes code more consistent and predictable, and improves readability when browsing through multiple clauses of functions like ``handle_call``.
+
+This pattern also helps avoid bugs where different messages get confused with one another, or where messages get sent to the wrong recipient; it's much easier to find the source of an unexpected message if it looks like ``{set_foobar_worker_pid, <0.312.0>}`` than if you just find a bare pid in your mailbox.
 
 ***
 ##### No nested header inclusion
