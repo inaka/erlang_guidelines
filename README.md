@@ -56,6 +56,7 @@ Table of Contents:
     * [No types in include files](#no-types-in-include-files)
     * [Don't import](#dont-import)
     * [Don't export_all](#dont-export_all)
+    * [Encapsulate OTP server APIs](#encapsulate-otp-server-apis)
     * [No debug calls](#no-debug-calls)
     * [Don't use case catch](#dont-use-case-catch)
   * [Tools](#tools)
@@ -453,6 +454,20 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 *Examples*: [export_all](src/export_all.erl)
 
 *Reasoning*: It's generally considered best to only export the specific functions that make up your module's known and documented external API. Keeping this list of functions small and consistent encourages good encapsulation and allows for more aggressive refactoring and internal improvements without altering the experience for those who make use of your module.
+
+***
+
+***
+##### Encapsulate OTP server APIs
+> Never do raw ``gen_server`` calls across module boundaries; the call should be encapsulated in an API function in the same module that implements the corresponding ``handle_call`` function. The same goes for other such OTP constructs (``gen_server`` casts, ``gen_fsm`` events, etc).
+
+*Examples*: [otp_encapsulation](src/otp_encapsulation.erl)
+
+*Reasoning*: By sticking to this pattern of encapsulation, we make it _much_ easier to find out where calls/events might originate from.
+Instead of having to search through the entire source tree for e.g. ``gen_server`` calls that look like they might send a certain message to a given process, we can just search for calls to the corresponding API function.
+This makes it much easier to modify APIs, and also allows us to benefit more from Dialyzer's checks, assuming our API functions have appropriate type specs on them.
+We can also change the underlying message format without disturbing any code outside of the module in question, and we can more easily avoid issues with RPC calls when running a mixed cluster.
+With good encapsulation, you can even do things like convert a ``gen_server`` to a ``gen_fsm`` without any code changes beyond just the one module.
 
 ***
 ##### No debug calls
