@@ -65,6 +65,7 @@ Table of Contents:
     * [Properly use logging levels](#properly-use-logging-levels)
     * [Prefer the https protocol when specifying dependency locations](#prefer-the-https-protocol-over-others-when-specifying-dependency-urls)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
+  * [Avoid recursion when possible](#avoid-recursion-when-possible)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
@@ -537,6 +538,16 @@ handling.
 ## Suggestions & Great Ideas
 
 Things that should be considered when writing code, but do not cause a PR rejection, or are too vague to consistently enforce.
+
+***
+##### Avoid recursion when possible
+> Occasionally recursion is the best way to implement a function, but often a fold or a list comprehension will yield safer, more comprehensible code.
+
+*Examples*: [alternatives to recursion](src/recursion.erl)
+
+*Reasoning*: Manually writing a recursive function is error-prone, and mistakes can be costly. In the wrong circumstances, a buggy recursive function can miss its base case, spiral out of control, and take down an entire node. This tends to counteract one of the main benefits of Erlang, where an error in a single process does not normally cause the entire node to crash.
+
+Additionally, to an experienced Erlang developer, folds and list comprehensions are much easier to understand than complex recursive functions. Such contstructs behave predictably: they always perform an action for each element in a list. A recursive function may work similarly, but it often requires careful scrutiny to verify what path the control flow will actually take through the code in practice.
 
 ***
 ##### CamelCase over Under_Score
