@@ -65,7 +65,7 @@ Table of Contents:
     * [Properly use logging levels](#properly-use-logging-levels)
     * [Prefer the https protocol when specifying dependency locations](#prefer-the-https-protocol-over-others-when-specifying-dependency-urls)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
-  * [Avoid writing your own recursive functions when possible](#avoid-writing-your-own-recursive-functions-when-possible)
+  * [Favor higher-order functions over manual use of recursion](#favor-higher-order-functions-over-manual-use-of-recursion)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
   * [Comment levels](#comment-levels)
@@ -540,7 +540,7 @@ handling.
 Things that should be considered when writing code, but do not cause a PR rejection, or are too vague to consistently enforce.
 
 ***
-##### Avoid writing your own recursive functions when possible
+##### Favor higher-order functions over manual use of recursion
 > Occasionally recursion is the best way to implement a function, but often a fold or a list comprehension will yield safer, more comprehensible code.
 
 *Examples*: [alternatives to recursion](src/recursion.erl)
