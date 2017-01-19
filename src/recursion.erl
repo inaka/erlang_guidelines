@@ -1,6 +1,6 @@
 -module(recursion).
 
--export([recurse/1, fold/1, comprehension/1]).
+-export([recurse/1, fold/1, map/1, comprehension/1]).
 
 %%
 %% Example:
@@ -25,6 +25,11 @@ fold(S) ->
 
 fold_fun(C, Acc) ->
     [string:to_upper(C) | Acc].
+
+%% BETTER: uses a map instead of a fold to yield a simpler
+%% implementation, since in this case a fold is overkill
+map(S) ->
+    lists:map(fun string:to_upper/1, S).
 
 %% BEST: in this case, a list comprehension yields the
 %% simplest implementation (assuming we ignore the fact
