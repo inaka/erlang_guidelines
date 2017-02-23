@@ -12,7 +12,7 @@ bad(WithThis) ->
 
 good(WithThis) ->
   try
-    something:that(may, WithThis)
+    something:that(may, fail, WithThis)
   catch
     _:Error ->
       lager:error("Error here: ~p~n"
