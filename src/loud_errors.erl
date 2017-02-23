@@ -1,13 +1,21 @@
 -module(loud_errors).
 
--export([bad/1, good/1]).
+-export([bad1/1, bad2/1, good/1]).
 
-bad(WithThis) ->
+bad1(WithThis) ->
   try
     something:that(may, fail, WithThis)
   catch
     _:Error ->
       {error, Error}
+  end.
+
+bad2(WithThis) ->
+  try
+    something:that(may, fail, WithThis)
+  catch
+    _:Error ->
+      throw({error, Error})
   end.
 
 good(WithThis) ->
