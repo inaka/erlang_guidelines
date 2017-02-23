@@ -1,6 +1,6 @@
 -module(loud_errors).
 
--export([bad1/1, bad2/1, good/1]).
+-export([bad1/1, bad2/1, good1/1, good2/1]).
 
 bad1(WithThis) ->
   try
@@ -18,7 +18,7 @@ bad2(WithThis) ->
       throw({error, Error})
   end.
 
-good(WithThis) ->
+good1(WithThis) ->
   try
     something:that(may, fail, WithThis)
   catch
@@ -27,4 +27,12 @@ good(WithThis) ->
                   " Arguments: ~p~n"
                   " Stack: ~p", [Error, WithThis, erlang:get_stacktrace()]),
       {error, Error}
+  end.
+
+good2(WithThis) ->
+  try
+    something:that(may, fail, WithThis)
+  catch
+    _:Error ->
+      exit({error, Error})
   end.
