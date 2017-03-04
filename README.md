@@ -12,7 +12,7 @@ Table of Contents:
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
     * [No Trailing Whitespace](#no-trailing-whitespace)
-    * [80 column per line](#80-column-per-line)
+    * [120 column per line](#120-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
@@ -72,7 +72,6 @@ Table of Contents:
   * [Move stuff to independent applications](#move-stuff-to-independent-applications)
   * [Use the facade pattern on libraries](#use-the-facade-pattern-on-libraries)
   * [Types in exported functions](#types-in-exported-functions)
-  * [Separate responsibilities in sumo_db](#separate-responsibilities-in-sumo_db)
 
 ## Contact Us
 
@@ -118,8 +117,8 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
 
 ***
-##### 80 column per line
-> Stick to 80 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
+##### 120 column per line
+> Stick to 120 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
 
 *Examples*: [col_width](src/col_width.erl)
 
@@ -617,13 +616,3 @@ This greatly reduces the learning curve of the library and therefore makes it mo
 *Examples*: [data_types](src/data_types.erl)
 
 *Reasoning*: It helps with function documentation and, when using opaque types, we ensure encapsulation.
-
-***
-##### Separate responsibilities in sumo_db
-> When using sumo_db you should separate the responsibilities clearly, creating for each entity:
-> - one module (usually called MODELs) to describe the entity and allow administrating instances of the model in memory
-> - one module (usually called MODEL_repo) to handle the various operations that require business logic relating to the entity
-
-*Examples*: [separate responsibilities in sumo_db](https://github.com/inaka/fiar/tree/master/src/models)
-
-*Reasoning*: By dividing the functions into two different modules we increase understandability of the functionality especially if these are called from external modules. It also allows us to better organize the code and have smaller modules.
