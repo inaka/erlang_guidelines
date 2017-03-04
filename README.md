@@ -370,7 +370,7 @@ See [related blog post](https://medium.com/@erszcz/when-not-to-use-macros-in-erl
 
 *Examples*: [record_sharing](src/record_sharing.erl)
 
-*Reasoning*: Records are used for data structure definitions. Hiding those structures aids encapsulation and abstraction. If a record structure needs to be changed and it's definition is written in a .hrl file, the developer should find all the files where that .hrl and verify that his change hasn't broken anything. That's not needed if the record structure is internal to the module that manages it.
+*Reasoning*: Records are used for data structure definitions. Hiding those structures aids encapsulation and abstraction. If a record structure needs to be changed and its definition is written in a .hrl file, the developer should find all the files where that .hrl and verify that his change hasn't broken anything. That's not needed if the record structure is internal to the module that manages it.
 
 ***
 ##### Avoid records in specs
