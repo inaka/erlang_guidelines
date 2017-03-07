@@ -12,7 +12,7 @@ Table of Contents:
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
     * [No Trailing Whitespace](#no-trailing-whitespace)
-    * [100 column per line](#100-column-per-line)
+    * [80 column per line](#80-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
@@ -121,13 +121,13 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
 
 ***
-##### 100 column per line
-> Stick to 100 chars per line, maximum.
+##### 80 column per line
+> Stick to 80 chars per line, maximum.
 
 *Examples*: [col_width](src/col_width.erl)
 
 *Reasoning*: Excessively long lines are a pain to deal with: you either have to scroll horizontally while editing, or live with ugly line wrapping at arbitrary points.
-The 100 character limit also keeps lines short enough that you can comfortably work with two source files side by side on a typical laptop screen, or three on a 1080p display.
+The 80 character limit also keeps lines short enough that you can comfortably work with two source files side by side on a typical laptop screen, or three on a 1080p display.
 
 ***
 ##### Maintain existing style
