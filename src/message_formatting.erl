@@ -1,5 +1,7 @@
 -module(message_formatting).
 
+-export([bad/1, good/1]).
+
 bad(Pid) ->
     %% These are error-prone and confusing, as there's no indication of what the message
     %% is supposed to be used for on the receiving end:
