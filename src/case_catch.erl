@@ -1,6 +1,6 @@
 -module(case_catch).
 
--epxort([bad/1, good/1]).
+-export([bad/1, good/1]).
 
 bad(List) ->
   case catch hd(List) of
