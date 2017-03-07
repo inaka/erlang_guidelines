@@ -12,7 +12,7 @@ Table of Contents:
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
     * [No Trailing Whitespace](#no-trailing-whitespace)
-    * [80 column per line](#80-column-per-line)
+    * [100 column per line](#100-column-per-line)
     * [Maintain existing style](#maintain-existing-style)
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
@@ -51,11 +51,14 @@ Table of Contents:
   * [Misc](#misc)
     * [Write function specs](#write-function-specs)
     * [Use -callback attributes over behaviour_info/1](use--callback-attributes-over-behaviour_info1)
+    * [Use atoms or tagged tuples for messages](#use-atoms-or-tagged-tuples-for-messages)
     * [No nested header inclusion](#no-nested-header-inclusion)
     * [No types in include files](#no-types-in-include-files)
     * [Don't import](#dont-import)
     * [Don't export_all](#dont-export_all)
+    * [Encapsulate OTP server APIs](#encapsulate-otp-server-apis)
     * [No debug calls](#no-debug-calls)
+    * [Don't use case catch](#dont-use-case-catch)
   * [Tools](#tools)
     * [Lock your dependencies](#lock-your-dependencies)
     * [Loud errors](#loud-errors)
@@ -118,12 +121,13 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
 
 ***
-##### 80 column per line
-> Stick to 80 chars per line, some of us still have to use vi sometimes, specially when editing code via ssh. Also, it allows showing more than one file simultaneously on a wide screen or laptop monitor.
+##### 100 column per line
+> Stick to 100 chars per line, maximum.
 
 *Examples*: [col_width](src/col_width.erl)
 
-*Reasoning*: Not having to scroll horizontally while editing is a HUGE gain. Also, in wider screens you can open two files: one beside the other.
+*Reasoning*: Excessively long lines are a pain to deal with: you either have to scroll horizontally while editing, or live with ugly line wrapping at arbitrary points.
+The 100 character limit also keeps lines short enough that you can comfortably work with two source files side by side on a typical laptop screen, or three on a 1080p display.
 
 ***
 ##### Maintain existing style
@@ -136,11 +140,12 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 ***
 
 ##### Avoid deep nesting
-> Try not to nest more than 3 levels deep.
+> Try not to nest more than 1 level deep.
 
 *Examples*: [nesting](src/nesting.erl)
 
 *Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
+See also: [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions).
 
 ***
 ##### More, smaller functions over case expressions
@@ -407,6 +412,16 @@ See [related blog post](https://medium.com/@erszcz/when-not-to-use-macros-in-erl
 *Reasoning*: Avoid deprecated functionality
 
 ***
+##### Use atoms or tagged tuples for messages
+> When sending a message between processes, you should typically either send a single, human-readable atom, or a tuple with a human-readable atom placed in element 1. This includes messages being sent via ``gen_server:call`` and the like.
+
+*Examples*: [message-formatting](src/message_formatting.erl)
+
+*Reasoning*: Tagging messages with a distinctive, human-readable atom helps clarify the purpose of a message for anyone reading or debugging the code. Using element 1 of the tuple makes code more consistent and predictable, and improves readability when browsing through multiple clauses of functions like ``handle_call``.
+
+This pattern also helps avoid bugs where different messages get confused with one another, or where messages get sent to the wrong recipient; it's much easier to find the source of an unexpected message if it looks like ``{set_foobar_worker_pid, <0.312.0>}`` than if you just find a bare pid in your mailbox.
+
+***
 ##### No nested header inclusion
 > When having many _nested_ "include files", use -ifndef(HEADER_FILE_HRL) .... -endif so they can be included in any order without conflicts.
 
@@ -442,12 +457,37 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 *Reasoning*: It's generally considered best to only export the specific functions that make up your module's known and documented external API. Keeping this list of functions small and consistent encourages good encapsulation and allows for more aggressive refactoring and internal improvements without altering the experience for those who make use of your module.
 
 ***
+
+***
+##### Encapsulate OTP server APIs
+> Never do raw ``gen_server`` calls across module boundaries; the call should be encapsulated in an API function in the same module that implements the corresponding ``handle_call`` function. The same goes for other such OTP constructs (``gen_server`` casts, ``gen_fsm`` events, etc).
+
+*Examples*: [otp_encapsulation](src/otp_encapsulation.erl)
+
+*Reasoning*: By sticking to this pattern of encapsulation, we make it _much_ easier to find out where calls/events might originate from.
+Instead of having to search through the entire source tree for e.g. ``gen_server`` calls that look like they might send a certain message to a given process, we can just search for calls to the corresponding API function.
+This makes it much easier to modify APIs, and also allows us to benefit more from Dialyzer's checks, assuming our API functions have appropriate type specs on them.
+We can also change the underlying message format without disturbing any code outside of the module in question, and we can more easily avoid issues with RPC calls when running a mixed cluster.
+With good encapsulation, you can even do things like convert a ``gen_server`` to a ``gen_fsm`` without any code changes beyond just the one module.
+
+***
 ##### No debug calls
 > Unless your project is meant to be run as an escript, there should be no `io:format` nor `ct:pal` calls in your production code (i.e. in the modules inside the `src` folder). Same rule applies for `lager` or `error_logger` calls if they're used just for debugging purposes during test stages.
 
 *Examples*: [debug_calls](src/debug_calls.erl)
 
 *Reasoning*: Leaving unnecessary logs on production code impacts performance. It increases the processing time for the functions you're debugging and also consumes disk space if the logs are written to a file (as they usually are). Besides, more often than not the log messages are only understood in the context of the test or debugging round in which they were created, therefore the become useless pretty fast.
+
+***
+##### Don't Use Case Catch
+> Don't capture errors with `case catch`, use `try ... of ... catch` instead.
+
+*Examples*: [case-catch](src/case_catch.erl)
+
+*Reasoning*: `case catch ...` mixes good results with errors which is confusing. By
+using `try ... of ... catch` the golden path is kept separate from the error
+handling. 
+
 
 ### Tools
 
