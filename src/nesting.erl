@@ -26,14 +26,11 @@ good() ->
     calls ->
       other:functions();
     that ->
-      internal_work()
-  end.
-
-internal_work() ->
-  try do:the(internal, parts) of
-    what ->
-      was:done(in)
-  catch
-    _:the ->
-      previous:example()
+      try do:the(internal, parts) of
+        what ->
+          was:done(in)
+      catch
+        _:the ->
+          previous:example()
+      end
   end.

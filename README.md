@@ -140,7 +140,7 @@ The 80 character limit also keeps lines short enough that you can comfortably wo
 ***
 
 ##### Avoid deep nesting
-> Try not to nest more than 1 level deep.
+> Try not to nest more than 3 levels deep.
 
 *Examples*: [nesting](src/nesting.erl)
 
