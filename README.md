@@ -204,7 +204,7 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 
 *Examples*: [dyn_calls](src/dyn_calls.erl)
 
-*Reasoning*: Dynamic calls can't be checked by ``xref``, one of the most useful tools in the Erlang world.
+*Reasoning*: Dynamic calls can't be checked by [``xref``](http://erlang.org/doc/apps/tools/xref_chapter.html), one of the most useful tools in the Erlang world. ``xref`` is a cross reference checking/observing tool.
 
 ***
 ##### Group modules in subdirectories by functionality
