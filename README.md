@@ -321,7 +321,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Examples*: [iolists](src/iolists.erl)
 
-*Reasoning*: Performance
+*Reasoning*: Performance and errors during conversion. [iolists](http://www.erlangpatterns.org/iolist.html) are just deeply nested lists of integers and binaries to represent IO data to avoid copying when concatenating strings or binaries.
 
 ### Macros
 
