@@ -204,7 +204,7 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 
 *Examples*: [dyn_calls](src/dyn_calls.erl)
 
-*Reasoning*: Dynamic calls can't be checked by ``xref``, one of the most useful tools in the Erlang world.
+*Reasoning*: Dynamic calls can't be checked by [``xref``](http://erlang.org/doc/apps/tools/xref_chapter.html), one of the most useful tools in the Erlang world. ``xref`` is a cross reference checking/observing tool.
 
 ***
 ##### Group modules in subdirectories by functionality
@@ -321,7 +321,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 *Examples*: [iolists](src/iolists.erl)
 
-*Reasoning*: Performance
+*Reasoning*: Performance and errors during conversion. [iolists](http://www.erlangpatterns.org/iolist.html) are just deeply nested lists of integers and binaries to represent IO data to avoid copying when concatenating strings or binaries.
 
 ### Macros
 
