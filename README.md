@@ -94,6 +94,22 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 ### Source Code Layout
 
 ***
+
+##### Project Structure
+> Follow the OTP and community standards for project folder structure.
+
+An individual Erlang application has the following structure when it is meant to conform to OTP conventions:
+
+You should use this "flat" directory structure if your project is a simple Erlang application (e.g. a generic component which might be used in other projects) or a library application.
+
+If your system consists of several applications working together, the umbrella project structure should be used,  in which the system root contains a folder named `apps` which will contain the individual application folders. Each application can then have its own `ebin`, `include`, `src` and `test` folders, and the entire project can share resources in the `priv` folder, and dependencies can be downloaded and compiled once for the entire project.
+
+*Reasoning*: All erlang tooling assumes these folder structures, and not following them will cause many errors, especially when working with releases. 
+
+An Erlang system consists of many applications and needs to follow various guidelines in order to be OTP-compliant. This ensures that it is compatible with various utility tools from OTP, e.g. for release generation. In the following lines the directory structure of a project is shown.
+
+***
+
 ##### Spaces over tabs
 > Spaces over tabs, 2 space indentation.
 
