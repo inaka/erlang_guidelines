@@ -2,7 +2,12 @@
   application, erlang_standards,
   [
    {description, "Erlang Standards"},
+   {vsn, "1.1"},
    {applications, []},
-   {modules, []}
+   {modules, []},
+   {maintainers, ["Inaka"]},
+   {licenses, ["Apache 2.0"]},
+   {links, [ {"Github", "https://github.com/inaka/erlang_guidelines"}]},
+   {build_tools, ["rebar3"]}
   ]
 }.

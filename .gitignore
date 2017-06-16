@@ -10,6 +10,7 @@ ebin
 erl_crash.dump
 log*/
 .erlang.mk.packages.*
+_build/
 
 # Ignore elvis escript
 elvis
