@@ -235,10 +235,6 @@ Including record definitions in header files promotes sharing internal details o
 
 Function definitions should most definitely not be included in header files because it leads to code duplication.
 
-*Examples*: [spaghetti](src/spaghetti.erl)
-
-*Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
-
 ### Syntax
 
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
