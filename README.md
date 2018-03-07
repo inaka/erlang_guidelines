@@ -24,6 +24,7 @@ Table of Contents:
     * [Avoid dynamic calls](#avoid-dynamic-calls)
     * [Group modules in subdirectories by functionality](#group-modules-in-subdirectories-by-functionality)
     * [Don't write spaghetti code](#dont-write-spaghetti-code)
+    * [Header files](#header-files)
   * [Syntax](#syntax)
     * [Avoid if expressions](#avoid-if-expressions)
     * [Avoid nested try...catches](#avoid-nested-try-catches)
@@ -42,7 +43,7 @@ Table of Contents:
     * [No Macros](#no-macros)
     * [Uppercase Macros](#uppercase-macros)
     * [No module or function name macros](#no-module-or-function-name-macros)
-  + [Records](#records)
+  * [Records](#records)
     * [Record names](#record-names)
     * [Records go first](#records-go-first)
     * [Don't share your records](#dont-share-your-records)
@@ -214,6 +215,25 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 ***
 ##### Don't write spaghetti code
 > Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
+
+*Examples*: [spaghetti](src/spaghetti.erl)
+
+*Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
+
+***
+##### Header files
+> Header files: 
+> - SHOULD NOT include type definitions nor record definitions nor function definitions.
+> - MAY include macros definitions, although macros should be [avoided](#no-macros). 
+
+*Examples*: [headers](headers.hrl)
+
+*Reasoning*: 
+Type definitions should be located in the modules where the data and its associated functions are defined. In type specs types may be module-prefixed which also makes it clear where the data type is defined, so there is no reason to need to share them via headers.
+
+Including record definitions in header files promotes sharing internal details of those records across modules, increasing coupling and preventing encapsulation, in turn making it more difficult to change and maintain the code. Records should be defined in their own modules which should provide an opaque data type and functions to access and manipulate the record.
+
+Function definitions should most definitely not be included in header files because it leads to code duplication.
 
 *Examples*: [spaghetti](src/spaghetti.erl)
 
