@@ -65,6 +65,7 @@ Table of Contents:
     * [Loud errors](#loud-errors)
     * [Properly use logging levels](#properly-use-logging-levels)
     * [Prefer the https protocol when specifying dependency locations](#prefer-the-https-protocol-over-others-when-specifying-dependency-urls)
+    * [No implicit functions with mixer](#no-implicit-functions-with-mixer)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
   * [Favor higher-order functions over manual use of recursion](#favor-higher-order-functions-over-manual-use-of-recursion)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
@@ -550,6 +551,13 @@ handling.
 * [Git on the Server - The Protocols](http://git-scm.com/book/ch4-1.html)
 * [GitHub Official Recommendation](https://help.github.com/articles/which-remote-url-should-i-use/)
 * [GitHub Protocol Comparison](https://gist.github.com/grawity/4392747#file-github-protocol-comparison-md)
+
+##### No implicit functions with mixer
+> Don't implicitly include all functions from a module when using the [mixer](https://github.com/chef/mixer) library. Explicitly list all mixed-in functions.
+
+*Examples*: [mixer](src/mixer.erl)
+
+*Reasoning*: Knowing all the functions that are included in a module makes it easier to reason about it. If any number of functions are implicitly brought from another module, it introduces an extra level of unnecessary indirection that requires jumping back and forth between files. The less information we have to keep in our heads the better.
 
 ## Suggestions & Great Ideas
 
