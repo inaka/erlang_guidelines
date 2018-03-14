@@ -272,11 +272,14 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 
 ***
 ##### Explicit state should be explicitly named
-> Name your state records ``#state`` and use ``-type state():: #state{}`` in all your OTP modules.
+> Name your state records ``#mod_state`` and use ``-type state():: #mod_state{}`` in all your modules that implement OTP behaviors.
 
 *Examples*: [state](src/state)
 
-*Reasoning*: OTP behaviours implementations usually require a state, and if it always have the same name it makes it more clearly recognizable. Defining a type for it, helps _dialyzer_ detect leaks (where an internal type as the state is used outside of the module).
+*Reasoning*: OTP behaviours implementations usually require a state, and if it has a recognizable name it makes it more easily identifiable. Defining a type for it, helps _dialyzer_ detect leaks (where an internal type as the state is used outside of the module).
+The usage of the module prefix in the record name has the goal of distinguishing different state tuples while debugging: Since records are just tuples when one is dumped into the shell it is easier to read `{good_state, att1, attr2}` than `{state, attr1, attr2, attr3}` or `{state, attr1, att2}`.
+At a glance you know that the tuple/record can be found in the `good.erl`module.
+
 
 ***
 ##### Don't use _Ignored variables
