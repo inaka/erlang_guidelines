@@ -66,6 +66,7 @@ Table of Contents:
     * [Properly use logging levels](#properly-use-logging-levels)
     * [Prefer the https protocol when specifying dependency locations](#prefer-the-https-protocol-over-others-when-specifying-dependency-urls)
 * [Suggestions & Great Ideas](#suggestions--great-ideas)
+  * [Prefer pattern-matching over testing for equality](#prefer-pattern-matching-over-testing-for-equality)
   * [Favor higher-order functions over manual use of recursion](#favor-higher-order-functions-over-manual-use-of-recursion)
   * [CamelCase over Under_Score](#camelcase-over-under_score)
   * [Prefer shorter (but still meaningful) variable names](#prefer-shorter-but-still-meaningful-variable-names)
@@ -551,6 +552,15 @@ handling.
 ## Suggestions & Great Ideas
 
 Things that should be considered when writing code, but do not cause a PR rejection, or are too vague to consistently enforce.
+
+***
+##### Prefer pattern-matching over testing for equality
+> When you want to write a conditional statement based on a comparison of two values, don't use equality and then switch according to the boolean result value. Use pattern matching instead.
+
+*Examples*: [pattern matching](src/prefer_pm.erl)
+
+*Reasoning*:
+From a semantic standpoint, _boolean switches_ after _equality_ introduce static boolean logic in your code, reducing its flexibility. Besides, pattern matching is just more declarative. And, specially in the case where there is a function involved, using pattern matching you get a chance to _do something_ with the result of such a function call.
 
 ***
 ##### Favor higher-order functions over manual use of recursion
