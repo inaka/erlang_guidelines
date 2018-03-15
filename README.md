@@ -6,26 +6,26 @@ Suggested reading material: http://www.erlang.se/doc/programming_rules.shtml
 ***
 
 Table of Contents:
-* [Contact Us](#Contact-Us)
+* [Contact Us](#contact-us)
 * [Conventions & Rules](#conventions--rules)
   * [Source Code Layout](#source-code-layout)
+    * [Maintain existing style](#maintain-existing-style)
     * [Spaces over tabs](#spaces-over-tabs)
     * [Use your spacebar](#use-your-spacebar)
     * [No Trailing Whitespace](#no-trailing-whitespace)
     * [100 column per line](#100-column-per-line)
-    * [Maintain existing style](#maintain-existing-style)
-    * [Avoid deep nesting](#avoid-deep-nesting)
     * [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions)
     * [Group functions logically](#group-functions-logically)
     * [Get your types together](#get-your-types-together)
     * [No God modules](#no-god-modules)
     * [Simple unit tests](#simple-unit-tests)
     * [Honor DRY](#honor-dry)
-    * [Avoid dynamic calls](#avoid-dynamic-calls)
     * [Group modules in subdirectories by functionality](#group-modules-in-subdirectories-by-functionality)
-    * [Don't write spaghetti code](#dont-write-spaghetti-code)
     * [Header files](#header-files)
   * [Syntax](#syntax)
+    * [Don't write spaghetti code](#dont-write-spaghetti-code)
+    * [Avoid dynamic calls](#avoid-dynamic-calls)
+    * [Avoid deep nesting](#avoid-deep-nesting)
     * [Avoid if expressions](#avoid-if-expressions)
     * [Avoid nested try...catches](#avoid-nested-try-catches)
   * [Naming](#naming)
@@ -89,9 +89,17 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 
 ## Conventions & Rules
 
-"Things that may be used as reason to reject a Pull Request."
+These are _"Things that may be used as reason to reject a Pull Request"_.
 
 ### Source Code Layout
+
+***
+##### Maintain existing style
+> When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
+
+*Examples*: [existing_style](src/existing_style.erl)
+
+*Reasoning*: It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
 
 ***
 ##### Spaces over tabs
@@ -107,7 +115,7 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 
 *Examples*: [spaces](src/spaces.erl)
 
-*Reasoning*: Again, easier to find / read / etc.
+*Reasoning*: It produces cleaner code that's easier to find / read / etc.
 
 ***
 ##### No Trailing Whitespace
@@ -115,11 +123,7 @@ And you can check all of our open-source projects at [inaka.github.io](http://in
 
 *Examples*: [trailing_whitespace](src/trailing_whitespace.erl)
 
-*Reasoning*: It's commit noise. Also [this long argument](https://programmers.stackexchange.com/questions/121555/why-is-trailing-whitespace-a-big-deal).
-
-### Syntax
-
-Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
+*Reasoning*: It's commit noise. As a reference, check out [this long argument](https://programmers.stackexchange.com/questions/121555/why-is-trailing-whitespace-a-big-deal).
 
 ***
 ##### 100 column per line
@@ -131,24 +135,7 @@ Erlang syntax is horrible amirite? So you might as well make the best of it, rig
 The 100 character limit also keeps lines short enough that you can comfortably work with two source files side by side on a typical laptop screen, or three on a 1080p display.
 
 ***
-##### Maintain existing style
-> When editing a module written by someone else, stick to the style in which it was written. If a project has an overall style, stick to that when writing new modules as well.
 
-*Examples*: [existing_style](src/existing_style.erl)
-
-*Reasoning*: It's better to keep a module that just looks ugly to you than to have a module that looks half ugly to you, half ugly to somebody else.
-
-***
-
-##### Avoid deep nesting
-> Try not to nest more than 3 levels deep.
-
-*Examples*: [nesting](src/nesting.erl)
-
-*Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
-See also: [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions).
-
-***
 ##### More, smaller functions over case expressions
 > Use pattern-maching in clause functions rather than case's. Specially important if the case is:
 > - the top-level expression of the function
@@ -199,28 +186,12 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 *Reasoning*: This convention is specifically put in this list (instead of treat it as a [great idea](#great-ideas)) so that reviewers can reject PRs that include the same code several times or PRs that re-implement something that they know it's already done somewhere else.
 
 ***
-##### Avoid dynamic calls
-> If there is no specific need for it, don't use dynamic function calling.
-
-*Examples*: [dyn_calls](src/dyn_calls.erl)
-
-*Reasoning*: Dynamic calls can't be checked by [``xref``](http://erlang.org/doc/apps/tools/xref_chapter.html), one of the most useful tools in the Erlang world. ``xref`` is a cross reference checking/observing tool.
-
-***
 ##### Group modules in subdirectories by functionality
 > When having lots of modules, use subdirectories for them, named with a nice descriptive name for what that "package" does.
 
 *Reasoning*: That way it's easier to find what you need and determine what a certain module does.
 
 *Note*: Remember to properly configure your ``Emakefile`` to handle that, if you use it.
-
-***
-##### Don't write spaghetti code
-> Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
-
-*Examples*: [spaghetti](src/spaghetti.erl)
-
-*Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
 
 ***
 ##### Header files
@@ -240,6 +211,31 @@ Function definitions should most definitely not be included in header files beca
 ### Syntax
 
 Erlang syntax is horrible amirite? So you might as well make the best of it, right? _Right_?
+
+***
+##### Don't write spaghetti code
+> Don't write spaghetti code (A list comprehension with a case inside, or blocks with begin/end, and nested stuff)
+
+*Examples*: [spaghetti](src/spaghetti.erl)
+
+*Reasoning*: Spaghetti code is harder to read, understand and edit. The function callgraph for your program should strive to be a directed acyclic graph.
+
+***
+##### Avoid dynamic calls
+> If there is no specific need for it, don't use dynamic function calling.
+
+*Examples*: [dyn_calls](src/dyn_calls.erl)
+
+*Reasoning*: Dynamic calls can't be checked by [``xref``](http://erlang.org/doc/apps/tools/xref_chapter.html), one of the most useful tools in the Erlang world. ``xref`` is a cross reference checking/observing tool.
+
+***
+##### Avoid deep nesting
+> Try not to nest more than 3 levels deep.
+
+*Examples*: [nesting](src/nesting.erl)
+
+*Reasoning*: Nested levels indicate deep logic in a function, too many decisions taken or things done in a single function. This hinders not only readability, but also maintainability (making changes) and debugging, and writing unit tests.
+See also: [More, smaller functions over case expressions](#more-smaller-functions-over-case-expressions).
 
 ***
 ##### Avoid if expressions
@@ -476,8 +472,6 @@ Following this rule you also get the benefits that `-opaque` types provide, for 
 *Reasoning*: It's generally considered best to only export the specific functions that make up your module's known and documented external API. Keeping this list of functions small and consistent encourages good encapsulation and allows for more aggressive refactoring and internal improvements without altering the experience for those who make use of your module.
 
 ***
-
-***
 ##### Encapsulate OTP server APIs
 > Never do raw ``gen_server`` calls across module boundaries; the call should be encapsulated in an API function in the same module that implements the corresponding ``handle_call`` function. The same goes for other such OTP constructs (``gen_server`` casts, ``gen_fsm`` events, etc).
 
@@ -542,10 +536,13 @@ handling.
   * ``alert``: _There is no rule on when to use this level_
   * ``emergency``: _There is no rule on when to use this level_
 
+***
 ##### Prefer the https protocol over others when specifying dependency URLs
 > When specifying dependencies in erlang.mk Makefiles or rebar.config, prefer using the https protocol to download the dependency repository.
 
-*Examples*: [makefile example](src/dependency_protocol/dep_protocol.makefile) [rebar example](src/dependency_protocol/dep_protocol.config)
+*Examples*:
+ * [makefile example](src/dependency_protocol/dep_protocol.makefile)
+ * [rebar example](src/dependency_protocol/dep_protocol.config)
 
 *Reasoning*: HTTPS is recommended by GitHub and is easier for CI.
 
@@ -553,6 +550,7 @@ handling.
 * [GitHub Official Recommendation](https://help.github.com/articles/which-remote-url-should-i-use/)
 * [GitHub Protocol Comparison](https://gist.github.com/grawity/4392747#file-github-protocol-comparison-md)
 
+***
 ##### No implicit functions with mixer
 > Don't implicitly include all functions from a module when using the [mixer](https://github.com/chef/mixer) library. Explicitly list all mixed-in functions.
 
