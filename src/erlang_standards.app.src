@@ -1,8 +1,8 @@
 {
   application, erlang_standards,
   [
-   {description, "Erlang Standards"},
-   {vsn, "1.1"},
+   {description, "Erlang Guidelines"},
+   {vsn, "1.2"},
    {applications, []},
    {modules, []},
    {maintainers, ["Inaka"]},
