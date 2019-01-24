@@ -341,7 +341,7 @@ At a glance you know that the tuple/record can be found in the `good.erl`module.
 
 ***
 ##### No Macros
-> Don't use macros, except for very specific cases, that include
+> Don't abuse macros, except for very specific cases, that include
 > * Predefined ones: ``?MODULE``, ``?MODULE_STRING`` and ``?LINE``
 > * Magic numbers: ``?DEFAULT_TIMEOUT``
 
