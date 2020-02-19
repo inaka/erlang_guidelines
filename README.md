@@ -199,7 +199,7 @@ The 100 character limit also keeps lines short enough that you can comfortably w
 > - SHOULD NOT include type definitions nor record definitions nor function definitions.
 > - MAY include macros definitions, although macros should be [avoided](#no-macros). 
 
-*Examples*: [headers](headers.hrl)
+*Examples*: [headers](src/headers.hrl)
 
 *Reasoning*: 
 Type definitions should be located in the modules where the data and its associated functions are defined. In type specs types may be module-prefixed which also makes it clear where the data type is defined, so there is no reason to need to share them via headers.
