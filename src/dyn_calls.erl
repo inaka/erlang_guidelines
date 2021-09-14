@@ -11,6 +11,6 @@ bad(Arg) ->
     end, Mods).
 
 good(Arg) ->
-  mdoule_1:my_function(Arg),
+  module_1:my_function(Arg),
   module_2:my_function(Arg),
   module_3:my_function(Arg).
