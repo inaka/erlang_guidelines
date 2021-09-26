@@ -246,7 +246,7 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 *Reasoning*: In some circumstances `if` introduces static boolean logic in your code, reducing code flexibility. In other cases, a `case` or a function call with pattern matching in its clauses is just more declarative. For newcommers (that have learned to use `if` in other languages), Erlang's `if` can be either hard to understand or easily abused.
 
 *Debate*:
-- [From OOP world](http://antiifcampaign.com/)
+- [The Erlang Rationale - The problem with 'if'](http://rvirding.blogspot.com/2008/11/erlang-rationale-problem-with-if.html)
 - [In this repo](erlang_guidelines/issues/14)
 - [In erlang-questions](http://erlang.org/pipermail/erlang-questions/2014-September/080827.html)
 
