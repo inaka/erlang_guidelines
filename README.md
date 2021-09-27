@@ -195,13 +195,13 @@ The 100 character limit also keeps lines short enough that you can comfortably w
 
 ***
 ##### Header files
-> Header files: 
+> Header files:
 > - SHOULD NOT include type definitions nor record definitions nor function definitions.
-> - MAY include macros definitions, although macros should be [avoided](#no-macros). 
+> - MAY include macros definitions, although macros should be [avoided](#no-macros).
 
 *Examples*: [headers](src/headers.hrl)
 
-*Reasoning*: 
+*Reasoning*:
 Type definitions should be located in the modules where the data and its associated functions are defined. In type specs types may be module-prefixed which also makes it clear where the data type is defined, so there is no reason to need to share them via headers.
 
 Including record definitions in header files promotes sharing internal details of those records across modules, increasing coupling and preventing encapsulation, in turn making it more difficult to change and maintain the code. Records should be defined in their own modules which should provide an opaque data type and functions to access and manipulate the record.
@@ -246,8 +246,8 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 *Reasoning*: In some circumstances `if` introduces static boolean logic in your code, reducing code flexibility. In other cases, a `case` or a function call with pattern matching in its clauses is just more declarative. For newcommers (that have learned to use `if` in other languages), Erlang's `if` can be either hard to understand or easily abused.
 
 *Debate*:
-- [From OOP world](http://antiifcampaign.com/)
-- [In this repo](issues/14)
+- [The Erlang Rationale - The problem with 'if'](http://rvirding.blogspot.com/2008/11/erlang-rationale-problem-with-if.html)
+- [In this repo](erlang_guidelines/issues/14)
 - [In erlang-questions](http://erlang.org/pipermail/erlang-questions/2014-September/080827.html)
 
 ***
@@ -499,7 +499,7 @@ With good encapsulation, you can even do things like convert a ``gen_server`` to
 
 *Reasoning*: `case catch ...` mixes good results with errors which is confusing. By
 using `try ... of ... catch` the golden path is kept separate from the error
-handling. 
+handling.
 
 
 ### Tools
