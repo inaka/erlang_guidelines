@@ -75,7 +75,7 @@ Table of Contents:
   * [Keep functions small](#keep-functions-small)
   * [Use behaviours](#use-behaviours)
   * [When programming defensively, do so on client side](#when-programming-defensively-do-so-on-client-side)
-  * [Avoid unnecesary calls to length/1](#avoid-unnecesary-calls-to-length1)
+  * [Avoid unnecessary calls to length/1](#avoid-unnecessary-calls-to-length1)
   * [Move stuff to independent applications](#move-stuff-to-independent-applications)
   * [Use the facade pattern on libraries](#use-the-facade-pattern-on-libraries)
   * [Types in exported functions](#types-in-exported-functions)
@@ -386,7 +386,7 @@ See [related blog post](https://medium.com/@erszcz/when-not-to-use-macros-in-erl
 
 ***
 ##### Don't share your records
-> Records should not be shared among multiple modules. If you need to share _objects_ that are represented as records, use opaque exported types and provide adequate accesor functions in your module.
+> Records should not be shared among multiple modules. If you need to share _objects_ that are represented as records, use opaque exported types and provide adequate accessor functions in your module.
 
 *Examples*: [record_sharing](src/record_sharing.erl)
 
@@ -669,7 +669,7 @@ If you design this way, the caller crashes if the arg is wrong.
 If you don't tighten up the function head, the gen_server will crash.
 
 ***
-##### Avoid unnecesary calls to length/1
+##### Avoid unnecessary calls to length/1
 > Lots of use cases of length/1 can be replaced by pattern matching, this is specially true when checking if the list has at least one element.
 
 *Examples*: [pattern matching](src/pattern_matching.erl)
@@ -690,7 +690,7 @@ If you don't tighten up the function head, the gen_server will crash.
 
 *Examples*: [kafkerl](https://github.com/inaka/kafkerl/blob/master/src/kafkerl.erl)
 
-*Reasoning*: Having the relevant functions in a single module means that the end user doesn't have a hard time figuring out which functions to call. Note that to avoid making it too complex, you probably want to carefully consider which functionality you wish to support here; exposing fewer functions (the ones that show the basic use of the library) as opposed to just creating a dummy module containing every single exported function in the library is prefered.
+*Reasoning*: Having the relevant functions in a single module means that the end user doesn't have a hard time figuring out which functions to call. Note that to avoid making it too complex, you probably want to carefully consider which functionality you wish to support here; exposing fewer functions (the ones that show the basic use of the library) as opposed to just creating a dummy module containing every single exported function in the library is preferred.
 This greatly reduces the learning curve of the library and therefore makes it more tempting to use.
 
 ***
