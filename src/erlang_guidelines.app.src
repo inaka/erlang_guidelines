@@ -1,9 +1,9 @@
 {
-  application, erlang_standards,
+  application, erlang_guidelines,
   [
    {description, "Erlang Guidelines"},
    {vsn, "1.2"},
-   {applications, []},
+   {applications, [kernel, stdlib]},
    {modules, []},
    {maintainers, ["Inaka"]},
    {licenses, ["Apache 2.0"]},

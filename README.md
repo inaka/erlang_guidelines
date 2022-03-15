@@ -28,6 +28,7 @@ Table of Contents:
     * [Avoid deep nesting](#avoid-deep-nesting)
     * [Avoid if expressions](#avoid-if-expressions)
     * [Avoid nested try...catches](#avoid-nested-try-catches)
+    * [Avoid non-local returns](#avoid-non-local-returns)
   * [Naming](#naming)
     * [Be consistent when naming](#be-consistent-when-naming-concepts)
     * [Explicit state should be explicitly named](#explicit-state-should-be-explicitly-named)
@@ -257,6 +258,22 @@ See also: [More, smaller functions over case expressions](#more-smaller-function
 *Examples*: [nested_try_catch](src/nested_try_catch.erl)
 
 *Reasoning*: Nesting `try…catch` blocks defeats the whole purpose of them, which is to isolate the code that deals with error scenarios from the nice and shiny code that deals with the expected execution path.
+
+***
+##### Avoid non-local returns
+> Don't use `throw` and `catch`
+
+*Examples*: [catch_and_throw](src/catch_and_throw.erl)
+
+*Reasoning*:
+On one hand, `throw` is not meant to be used to _throw exceptions_, so it shouldn't be used for that.
+On the other hand, `throw` is meant to be used for non-local returns. While they might seem to be useful in terms of performance, they tend to produce more complex code that is harder to understand or reason about. Particularly if the result being thrown in one place is caught in another very distant part of the application. You can find more in [this conversation at the Erlang Forums](https://erlangforums.com/t/should-we-eventually-improve-catch-throw-semantics/1210/6):
+
+> IMO, it is a really bad style, especially in the context of a functional language. It is returning something through side effects. That may have its uses to [quickly break out of deep recursion](https://learnyousomeerlang.com/errors-and-exceptions#try-a-try-in-a-tree), but they are rare. I think I never used throw even once. In any case, I think it should not be made “socially acceptable” to return stuff via throw, much less encouraged.
+(said @Maria-12648430)
+
+> I definitely agree. I prefer to use tail-recursive functions instead of non-local returns unless that turns out to be too cumbersome. That is, if the code becomes convoluted written in a tail-recursive way, I will write it in a body-recursive way and use throw to break out of the recursion. I have typically used that in complicated optimization passes in the compiler; that is, the code will do the optimization in recursive functions, but if anything turns up that makes the optimization impossible I will throw a `not_possible` exception to break out of the recursion.
+(said @bjorng)
 
 ### Naming
 
