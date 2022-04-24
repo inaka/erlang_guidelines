@@ -1,6 +1,6 @@
 -module(types).
 
--incldue("bad_types.hrl").
+-include("bad_types.hrl").
 
 -type id() :: pos_integer().
 
